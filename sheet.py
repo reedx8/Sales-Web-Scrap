@@ -1,3 +1,8 @@
+'''
+TODO:
+- Grab todays date, output to correct column in sheet
+'''
+
 import pygsheets
 import pandas as pd
 
@@ -5,17 +10,26 @@ import pandas as pd
 path = '/Users/xreed/Desktop/web-scrap-ava/google_api_cred.json'
 gc = pygsheets.authorize(service_file=path)
 
-# Create empty dataframe
-df = pd.DataFrame()
+def send_data(store, platform):
+    # Create empty dataframe
+    df = pd.DataFrame()
 
-# Create a column
-df['name'] = ['John', 'Steve', 'Sarah']
+    # open the google spreadsheet
+    ss = gc.open_by_key('1deyIpmet1Fa9bRqAI9IbRpMC60Z1NmM3Jt6cOFOwZe0')
 
-#open the google spreadsheet (where 'PY to Gsheet Test' is the name of my sheet)
-sh = gc.open('Live Sales')
+    # select "todays sales" sheet
+    sh = ss.worksheet("title", "Today's Sales")
 
-#select the first sheet 
-wks = sh[0]
-
-#update the first sheet with df, starting at cell B2. 
-wks.set_dataframe(df,(1,1))
+    # Create a column with Doordash/Revel column title and its data
+    if (platform.lower() == "doordash"):
+        df['Doordash'] = [
+            store['Hall'],
+            store['Barrows'],
+            store['Kruse'],
+            store['Orenco']
+        ]
+        # update sheet with df, starting at cell C1 (doordash)
+        sh.set_dataframe(df,(1,3)) # set_dataframe(df, (row, column))
+    elif (platform.lower() == "revel"):
+        df['Revel'] = ['John', 'Steve', 'Sarah'] # dummy data
+        sh.set_datafram(df, (1,2))

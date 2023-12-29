@@ -13,6 +13,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver import Chrome, ChromeOptions
 from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
+from sheet import send_data
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,8 +27,20 @@ options.add_argument("window-size=1200x600")
 username = os.getenv('DD_USERNAME')
 password = os.getenv('DD_PW')
 
-login_url = os.getenv('DD_LOGIN_URL') 
-all_stores = ["Ava Roasteria (Hall Blvd)", "Ava Roasteria (SW Barrows Rd)", "Ava Roasteria (Meadows Rd)", "Ava Roasteria (Hillsboro)" ]
+login_url = os.getenv('DD_LOGIN_URL')
+
+hall = "Ava Roasteria (Hall Blvd)"
+barrows = "Ava Roasteria (SW Barrows Rd)"
+kruse = "Ava Roasteria (Meadows Rd)"
+orenco = "Ava Roasteria (Hillsboro)"
+all_stores = [hall, barrows, kruse, orenco]
+
+all_sales = {
+    'Hall': 0,
+    'Barrows': 0,
+    'Kruse': 0,
+    'Orenco': 0
+}
 
 print("Running doordash...")
 driver.get(login_url)
@@ -105,14 +118,29 @@ for store_name in all_stores:
     # output/send the sales value:
     print(store_name + ": " + sales.text)
 
-    # Click top left menu button to dropdown
+
+    if (store_name == hall):
+        all_sales['Hall'] = sales.text
+    elif (store_name == barrows):
+        all_sales['Barrows'] = sales.text
+    elif (store_name == kruse):
+        all_sales['Kruse'] = sales.text
+    elif (store_name == orenco):
+        all_sales['Orenco'] = sales.text
+    else:
+        print("ERROR: Store name is incorrect. See 'all_stores'")
+
+    # Click on top left menu button to dropdown
     store_btn = driver.find_element(By.XPATH, f"//span[text()='{store_name}']")
     actions.move_to_element(store_btn).click(store_btn).perform()
     sleep(1)
 
 
 
-# Step 3 -- Quit driver and exit program. Done.
+# Step 3 -- Send live sales data to spreadsheet:
+send_data(all_sales, "doordash")
+
+# Step 4 -- Quit driver and exit program. Done:
 driver.quit()
 
 
