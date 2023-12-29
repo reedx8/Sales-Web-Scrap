@@ -8,3 +8,4 @@ Thumbs.db
 *.tar
 *.zip
 google_api_cred.json
+__pycache__/
