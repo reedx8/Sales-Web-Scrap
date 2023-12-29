@@ -11,13 +11,14 @@ Scraps live sales data from 4 different web platforms
     - Load-dotenv: `pip3 install python-dotenv`
     - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
     - pandas: `pip3 install pandas`
-3. Message repo owner for the required:
+3. Message repo owner for the following files and add to project's root folder:
     - `.env` file
-    -  google api credentials file
-4. Edit `google_api_cred.json` with your own path to the file
+    -  `google_api_cred.json` file
+4. Edit `sheet.py` with your own path to `google_api_cred.json`
 5. Run each of the following in terminal:
-    - `python3 revel.py`
-    - `python3 doordash.py`
+    - `python3 revel.py <path_option>`
+    - `python3 doordash.py <path_option>`
+    - Path option = The path option defined in `sheet.py`
     - Note: Refrain from closing terminal or resizing browser window while programs are running.
 
 ## Installation Docs
