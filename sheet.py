@@ -26,7 +26,7 @@ except Exception as error:
 
 gc = pygsheets.authorize(service_file=path)
 
-def send_data(store, platform):
+def send_data(sales_data, platform):
     # Create empty dataframe
     df = pd.DataFrame()
 
@@ -36,16 +36,16 @@ def send_data(store, platform):
     # select "todays sales" sheet
     sh = ss.worksheet("title", "Today's Sales")
 
-    # Create a column with Doordash/Revel column title and its data
+    # Create a column with Doordash/Revel column title and its sales_data
     if (platform.lower() == "doordash"):
         df['Doordash'] = [
-            store['Hall'],
-            store['Barrows'],
-            store['Kruse'],
-            store['Orenco']
+            sales_data['Hall'],
+            sales_data['Barrows'],
+            sales_data['Kruse'],
+            sales_data['Orenco']
         ]
         # update sheet with df, starting at cell C1 (doordash)
         sh.set_dataframe(df,(1,3)) # set_dataframe(df, (row, column))
     elif (platform.lower() == "revel"):
-        df['Revel'] = ['John', 'Steve', 'Sarah'] # dummy data
-        sh.set_datafram(df, (1,2))
+        df['Revel'] = ['John', 'Steve', 'Sarah'] # dummy sales_data
+        sh.set_dataframe(df, (1,2))

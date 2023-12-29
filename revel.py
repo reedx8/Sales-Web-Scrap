@@ -17,6 +17,7 @@ from selenium.webdriver import Chrome, ChromeOptions
 from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from dotenv import load_dotenv
+from sheet import send_data
 
 load_dotenv()
 
@@ -155,7 +156,9 @@ for i in range(3):
         print("Orenco: $", net_sales)
     elif (i == 2):
         print("Barrows: $", net_sales)
-
+    
+    
+send_data({"dummy data": "0"}, "revel")
 
 # Final step -- Close the Selenium WebDriver
 driver.quit()
