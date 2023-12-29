@@ -1,1 +1,1 @@
-# Call all platforms from this main file (ignore thie file for now)
+# Call all platforms from this main file (ignore this file for now)
