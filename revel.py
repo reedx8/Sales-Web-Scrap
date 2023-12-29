@@ -1,11 +1,11 @@
 '''
 TODO: 
 - refactor this file first...
-1. Test retry if '----' properly
+- Test retry if '----' properly
 - navigate to avaroasteria.revelup.com/reports after logging in (target_url)
-1. get sales from reports > fileres > all incluscions unchecked (can include tips) > net sales
-1. check that each store_link == store name you are expecting 
-2. actions that are highly dependant on UI not changing
+-  get sales from reports > fileres > all incluscions unchecked (can include tips) > net sales
+- check that each store_link == store name you are expecting 
+- actions that are highly dependant on UI not changing
 - what if beaverton not loaded first after logging in?
 '''
 
@@ -30,6 +30,13 @@ target_url = os.getenv('REV_TARGET_URL')
 username = os.getenv('REV_USERNAME')
 password = os.getenv('REV_PW')
 
+all_sales = {
+    "Hall": 0,
+    "Barrows": 0,
+    "Kruse": 0,
+    "Orenco": 0
+}
+
 # Either used multiple times in code, or location in DOM likely to be changed
 establ_classname =  "sc-jSUZER"
 net_sales_xpath = "//*[@id='overview-payment-widget']/div[2]/div[2]/div[5]/div[2]"
@@ -45,8 +52,7 @@ driver.get(login_url)
 
 
 # Step 1 --  Handle log in
-attempts = 1
-while(attempts <= 3):
+for attempts in range(4):
     try:
         shadow_root_script = "return document.querySelector('body > login-app').shadowRoot"
         shadow_root = driver.execute_script(shadow_root_script)
@@ -69,33 +75,33 @@ while(attempts <= 3):
             driver.quit()
             exit()
         else:
-            attempts += 1
-            continue
-    else:
-        break
+            print("Login attempt made...")
+            sleep(2)
 
 
 # Wait for the page to load after login, initial login can take awhile (adjust the wait time as needed)
 sleep(10) # simply pauses execution for x seconds
 
-# Step 2 -- 
+# Step 2 -- Get shadow root from html dom
 shadow_root_script = "return document.querySelector('body > div.mf-header-wrapper > management-console-header').shadowRoot"
 shadow_root = driver.execute_script(shadow_root_script)
 establishment_link = shadow_root.find_element(By.CLASS_NAME, establ_classname)
 
-# Step 3 -- make 3 total attempts to get beaverton's net sales:
+# Step 3 -- Make 3 total attempts to get beaverton's net sales:
 for attempts in range(4):
     # DNU: relative xpath worked here where full xpath didnt for some reason
     net_sales = driver.find_element(By.XPATH, net_sales_xpath).text # accesses text inside element
     if (attempts >= 3):
-        print("ERROR: Net sales not loading. Check internet connection or revel website")
-        driver.quit()
-        exit()
+        print("ERROR: Net sales not loading. Check internet connection and try again.")
+        net_sales = "--"
+        # driver.quit()
+        # exit()
     elif (net_sales == "----"):
         sleep(3) # net sales not loaded yet, wait x seconds
     else:
         break # got net sales figure
 print("Hall: $", net_sales)
+all_sales["Hall"] = net_sales
 
 # DNU: full xpath worked here in the menu though for some reason
 stores_xpaths = [
@@ -113,7 +119,7 @@ for i in range(3):
     # Wait up to a max of 3 times for menu to load
     for attempts in range(4):
         if (attempts >= 3):
-            print("ERROR: Menu not loading. Check internet connection or revel website")
+            print("ERROR: Menu not loading. Check internet connection and try again.")
             driver.quit()
             exit()
         elif (driver.find_element(By.XPATH, stores_xpaths[i]).is_displayed()):
@@ -141,9 +147,10 @@ for i in range(3):
         net_sales = driver.find_element(By.XPATH, net_sales_xpath).text # accesses text inside element
 
         if (attempts >= 3):
-            print("Net sales not loading. Check internet connection or revel website")
-            driver.quit()
-            exit()
+            print("ERROR: Net sales not loading. Check internet connection and try again.")
+            net_sales = "--"
+            # driver.quit()
+            # exit()
         elif (net_sales == "----"):
             sleep(3)
         else:
@@ -152,13 +159,16 @@ for i in range(3):
 
     if (i == 0):
         print("Kruse: $", net_sales)
+        all_sales["Kruse"] = net_sales
     elif(i == 1):
         print("Orenco: $", net_sales)
+        all_sales["Orenco"] = net_sales
     elif (i == 2):
         print("Barrows: $", net_sales)
+        all_sales["Barrows"] = net_sales
     
     
-send_data({"dummy data": "0"}, "revel")
+send_data(all_sales, "revel")
 
 # Final step -- Close the Selenium WebDriver
 driver.quit()

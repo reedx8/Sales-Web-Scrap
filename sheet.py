@@ -26,6 +26,7 @@ except Exception as error:
 
 gc = pygsheets.authorize(service_file=path)
 
+# Sends live sales data to google spreadsheet ("Live Sales" spreadsheet)
 def send_data(sales_data, platform):
     # Create empty dataframe
     df = pd.DataFrame()
@@ -37,6 +38,7 @@ def send_data(sales_data, platform):
     sh = ss.worksheet("title", "Today's Sales")
 
     # Create a column with Doordash/Revel column title and its sales_data
+    # Ensure to insert sales data in the following order: Hall, Barrows, Kruse, then Orenco
     if (platform.lower() == "doordash"):
         df['Doordash'] = [
             sales_data['Hall'],
@@ -47,5 +49,10 @@ def send_data(sales_data, platform):
         # update sheet with df, starting at cell C1 (doordash)
         sh.set_dataframe(df,(1,3)) # set_dataframe(df, (row, column))
     elif (platform.lower() == "revel"):
-        df['Revel'] = ['John', 'Steve', 'Sarah'] # dummy sales_data
+        df['Revel'] = [
+            sales_data['Hall'],
+            sales_data['Barrows'],
+            sales_data['Kruse'],
+            sales_data['Orenco']
+        ]
         sh.set_dataframe(df, (1,2))
