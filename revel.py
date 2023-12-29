@@ -1,5 +1,6 @@
 '''
 TODO: 
+- refactor this file first...
 1. Test retry if '----' properly
 - navigate to avaroasteria.revelup.com/reports after logging in (target_url)
 1. get sales from reports > fileres > all incluscions unchecked (can include tips) > net sales

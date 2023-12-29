@@ -1,20 +1,11 @@
 '''
-TO RUN:
-1. need the following installed:
-    - chrome
-    - python 3
-    - selenium
-    - load_dotenv
-2. In terminal, type the following then press enter: python3 doordash.py
-3. Wait for program to finish in terminal. Done.
-Note: You can use computer like normal while program is running (Dont close terminal while running nor resize window)
-
 TODO:
 1. Ensure sales value is for the appropriate store:
     - could cehck the menu button
     - coulc grab previous_sales and check if sales == previous_sales
 2. Change find_element on the sales value to something more reliable
 '''
+
 import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
