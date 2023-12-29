@@ -1,5 +1,7 @@
 # Sales Web Scrap (Ava)
-Scraps live sales data from 4 different web platforms
+Scraps live sales data from 4 different web platforms and sends data to a spreadsheet.
+
+Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z1NmM3Jt6cOFOwZe0/edit#gid=0
 
 ## To run:
 1. Clone the repo
