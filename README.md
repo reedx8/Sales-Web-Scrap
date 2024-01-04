@@ -3,7 +3,7 @@ Scraps live sales data from 4 different web platforms and sends data to a spread
 
 Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z1NmM3Jt6cOFOwZe0/edit#gid=0
 
-## To run:
+## To run (Macs only):
 1. Clone the repo
 2. Install the following (see "Installation Docs" section for more):
     - Chrome browser
