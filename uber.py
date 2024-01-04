@@ -20,12 +20,24 @@ login_url = os.getenv("UBER_LOGIN_URL")
 username = os.getenv("UBER_USERNAME")
 password = os.getenv("UBER_PW")
 
+hall = "AVA Roasteria (SW Hall Blvd)"
+barrows = "Ava Roasteria (Barrows Road)"
+kruse = "AVA Roasteria (Lake Oswego)"
+orenco = "Ava Roasteria (Orenco Station)"
+
 all_stores = [
-    "AVA Roasteria (SW Hall Blvd)",
-    "Ava Roasteria (Barrows Road)",
-    "AVA Roasteria (Lake Oswego)",
-    "Ava Roasteria (Orenco Station)"
+    hall,
+    barrows,
+    kruse,
+    orenco
 ]
+
+all_sales = {
+    "Hall": 0,
+    "Barrows": 0,
+    "Kruse": 0, 
+    "Orenco": 0
+}
 
 # Step 1: Handle Login
 driver.get(login_url)
@@ -64,11 +76,21 @@ for store in all_stores:
     sleep(1)
     actions.move_to_element(store_link).click(store_link).perform()
     sleep(10)
+
     sales = driver.find_element(By.XPATH, "//h5[@data-baseweb='typo-headingsmall']").text
     print(store, ": ", sales)
 
+    if (store == hall):
+        all_sales["Hall"] = sales
+    elif (store == barrows):
+        all_sales["Barrows"] = sales
+    elif (store == kruse):
+        all_sales["Kruse"] = sales
+    elif (store == orenco):
+        all_sales["Orenco"] = sales
+    
+# Step 3: Send live sales data to spreadsheet
+send_data(all_sales, "uber")
 
-
-
-# Step 3: Quit selenium properly, and exit program. Done. 
+# Step 4: Quit selenium properly, and exit program. Done. 
 driver.quit()

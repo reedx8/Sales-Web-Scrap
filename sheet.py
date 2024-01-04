@@ -56,3 +56,11 @@ def send_data(sales_data, platform):
             sales_data['Orenco']
         ]
         sh.set_dataframe(df, (1,2))
+    elif (platform.lower() == "uber"):
+        df["Uber Eats"] = [
+            sales_data['Hall'],
+            sales_data['Barrows'],
+            sales_data['Kruse'],
+            sales_data['Orenco']
+        ]
+        sh.set_dataframe(df, (1,5))
