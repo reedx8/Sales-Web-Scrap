@@ -50,11 +50,11 @@ actions = ActionChains(driver)
 driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
 driver.get(login_url)
 
+shadow_root_script = "return document.querySelector('body > login-app').shadowRoot"
 
-# Step 1 --  Handle log in
-for attempts in range(4):
+# Step 1 --  Handle log in (4 attempts)
+for attempts in range(5):
     try:
-        shadow_root_script = "return document.querySelector('body > login-app').shadowRoot"
         shadow_root = driver.execute_script(shadow_root_script)
         username_field = shadow_root.find_element(By.CSS_SELECTOR, '.login-app-1-MuiInputBase-input')
         password_field = shadow_root.find_element(By.CSS_SELECTOR, '.login-app-1-MuiOutlinedInput-inputAdornedEnd')
@@ -69,7 +69,7 @@ for attempts in range(4):
         login_button = shadow_root.find_element(By.CSS_SELECTOR, '.login-app-1-MuiButton-root')
         login_button.send_keys(Keys.RETURN)
     except Exception as error:
-        if (attempts >= 3):
+        if (attempts >= 4):
             # print('ERROR: Username, password, or login button wasnt yet loaded in the HTML DOM. Try waiting longer.')
             print(error)
             driver.quit()
@@ -77,6 +77,8 @@ for attempts in range(4):
         else:
             print("Login attempt made...")
             sleep(2)
+    else:
+        break #needed, else code will login after succesfull atempt but also error and quit from exception at times (bug)
 
 
 # Wait for the page to load after login, initial login can take awhile (adjust the wait time as needed)
