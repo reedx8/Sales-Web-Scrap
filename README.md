@@ -17,9 +17,10 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
     - `.env` file
     -  `google_api_cred.json` file
 4. Edit `sheet.py` with your own path to `google_api_cred.json`
-5. Run each of the following in terminal:
-    - `python3 revel.py <path_option>`
-    - `python3 doordash.py <path_option>`
+5. Run each of the following in terminal, one by one:
+    - `python3 revel.py <PATH_OPTION>`
+    - `python3 doordash.py <PATH_OPTION>`
+    - `python3 uber.py <PATH_OPTION>`
     - Path option = The path option defined in `sheet.py`
     - Note: Refrain from closing terminal or resizing browser window while programs are running.
 
