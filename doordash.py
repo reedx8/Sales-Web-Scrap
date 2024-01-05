@@ -42,7 +42,7 @@ all_sales = {
     'Orenco': 0
 }
 
-print("\nRunning doordash...")
+print("\nRunning Doordash...")
 driver.get(login_url)
 
 sleep(3) # NEW: forced wait needed now, else a 2 step email verification popup presents itself (must recognize bot if input too fast)

@@ -48,8 +48,9 @@ barrows_menu_xpath = "//*[@id='establishments-tree']/div/div[3]/ul/li[1]/ul/li[4
 driver = webdriver.Chrome()
 actions = ActionChains(driver)
 driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
-driver.get(login_url)
 
+print("\nRunning Revel...")
+driver.get(login_url)
 shadow_root_script = "return document.querySelector('body > login-app').shadowRoot"
 
 # Step 1 --  Handle log in (4 attempts)

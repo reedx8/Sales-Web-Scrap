@@ -39,6 +39,8 @@ all_sales = {
     "Orenco": 0
 }
 
+print("\nRunning Uber Eats...")
+
 # Step 1: Handle Login
 driver.get(login_url)
 cont_with_google_btn = driver.find_element(By.XPATH, "//p[text()='Continue with Google']")
