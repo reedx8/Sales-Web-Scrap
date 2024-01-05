@@ -1,4 +1,5 @@
 import os
+import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -10,7 +11,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-driver = webdriver.Chrome()
+if sys.argv[1] == 'x3':
+    driver = webdriver.Chrome('C:\\Users\\reedx\\Downloads\\chrome-win64\\chrome-win64\\chrome')
+else:
+    driver = webdriver.Chrome()
 driver.implicitly_wait(5) 
 actions = ActionChains(driver)
 options = ChromeOptions()
