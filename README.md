@@ -8,6 +8,9 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
 2. Install the following (see "Installation Docs" section for more):
     - Chrome browser
     - python 3.9: https://www.python.org/downloads/
+        - Add python.exe to PATH
+        - Use admin priviliges
+    - git: https://git-scm.com/downloads
     - pip: Comes packaged with python when downloaded from python.org
     - Selenium: `pip3 install selenium`
     - Load-dotenv: `pip3 install python-dotenv`
