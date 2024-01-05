@@ -42,8 +42,15 @@ all_sales = {
     'Orenco': 0
 }
 
-print("Running doordash...")
+print("\nRunning doordash...")
 driver.get(login_url)
+
+sleep(3) # NEW: forced wait needed now, else a 2 step email verification popup presents itself (must recognize bot if input too fast)
+
+# may be nec if you need to handle the 2 stem email verification:
+# driver.alert_is_present()
+# alert = driver.switch_to.alert
+
 
 # Step 1 --  Handle log in
 for attempts in range(4):
