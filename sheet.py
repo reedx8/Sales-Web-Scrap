@@ -25,6 +25,8 @@ except Exception as error:
     print("'x2' = Running on xavier's mac mini\n")
     print("Program terminated")
     print("*************************\n")
+    print(error)
+    print()
     exit()
 
 gc = pygsheets.authorize(service_file=path)
