@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 if sys.argv[1] == 'x3':
-    driver = webdriver.Chrome('C:\\Users\\reedx\\Downloads\\chrome-win64\\chrome-win64\\chrome')
+    driver = webdriver.Chrome('C:\\Users\\reedx\\Downloads\\chrome-win64\\chrome-win64\\chrome.exe')
 else:
     driver = webdriver.Chrome()
 driver.implicitly_wait(5) 
