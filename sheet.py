@@ -14,7 +14,7 @@ try:
     elif (sys.argv[1] == 'x2'): 
         # path option 2 ('x2') -- Xavier's mac mini machine
         path = '/Users/xvrmac/code/Sales-Web-Scrap/google_api_cred.json'
-    elif (sys.argv[2] == 'x3'):
+    elif (sys.argv[1] == 'x3'):
         # path option 3 -- Xavier's asus windows machine
         path = 'C:\\Users\\reedx\\Code\\Sales-Web-Scrap\\google_api_cred.json'
 except Exception as error:
