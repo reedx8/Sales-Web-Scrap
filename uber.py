@@ -8,11 +8,13 @@ from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains 
 from sheet import send_data
 from dotenv import load_dotenv
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 load_dotenv()
 
 if sys.argv[1] == 'x3':
-    driver = webdriver.Chrome('C:\\Users\\reedx\\Downloads\\chrome-win64\\chrome-win64\\chrome.exe')
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 else:
     driver = webdriver.Chrome()
 driver.implicitly_wait(5) 
