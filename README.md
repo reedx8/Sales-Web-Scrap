@@ -12,7 +12,7 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
         - Use admin priviliges
     - git: https://git-scm.com/downloads
     - pip: Comes packaged with python when downloaded from python.org
-    - Selenium: `pip3 install selenium`
+    - Selenium (4.16): `pip3 install selenium`
         - *Note*: Use `pip3` or `pip` depending on your setup
     - Load-dotenv: `pip3 install python-dotenv`
     - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
