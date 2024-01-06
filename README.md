@@ -12,13 +12,14 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
         - Use admin priviliges
     - git: https://git-scm.com/downloads
     - pip: Comes packaged with python when downloaded from python.org
-    - Selenium (4.16): `pip3 install selenium`
-        - *Note*: Use `pip3` or `pip` depending on your setup
-    - Load-dotenv: `pip3 install python-dotenv`
-    - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
-    - pandas: `pip3 install pandas`
-    - webdriver-manager: `pip3 install webdriver-manager` (*needed for windows users only*)
-3. Add the following files to project folder (message repo owner):
+    - Open Terminal (Mac) or Command Prompt (windows) to install the following:
+        - Selenium (4.16): `pip3 install selenium`
+            - *Note*: Use `pip3` or `pip` depending on your setup
+        - Load-dotenv: `pip3 install python-dotenv`
+        - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
+        - pandas: `pip3 install pandas`
+        - webdriver-manager: `pip3 install webdriver-manager` (*needed for windows users only*)
+    3. Add the following files to project folder (message repo owner):
     - `.env` file
         - **Windows users only**: Open notepad to create a new file, copy credentials to the file, file -> save, save as type: All Files, and name it ".env" (without quotes). Now move that file to the project folder.
     -  `google_api_cred.json` file
