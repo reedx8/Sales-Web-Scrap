@@ -13,12 +13,12 @@ from selenium.webdriver.chrome.service import Service
 
 load_dotenv()
 
-if sys.argv[1] == 'x3':
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-else:
-    driver = webdriver.Chrome()
-driver.implicitly_wait(5) 
-actions = ActionChains(driver)
+# if sys.argv[1] == 'x3':
+#     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+# else:
+#     driver = webdriver.Chrome()
+# driver.implicitly_wait(5) 
+# actions = ActionChains(driver)
 options = ChromeOptions()
 options.add_argument("window-size=1200x600") 
 
@@ -45,60 +45,70 @@ all_sales = {
     "Orenco": 0
 }
 
-print("\nRunning Uber Eats...")
+def run_uber():
+    print("\nRunning Uber Eats...")
 
-# Step 1: Handle Login
-driver.get(login_url)
-cont_with_google_btn = driver.find_element(By.XPATH, "//p[text()='Continue with Google']")
-actions.move_to_element(cont_with_google_btn).click(cont_with_google_btn).perform()
-
-popup = driver.window_handles[1]
-driver.switch_to.window(popup)
-
-username_field = driver.find_element(By.XPATH, "//input[@type='email']")
-username_field.send_keys(username)
-
-next_btn = driver.find_element(By.XPATH, "//span[text()='Next']")
-actions.move_to_element(next_btn).click(next_btn).perform()
-
-sleep(3)
-
-pw_field = driver.find_element(By.XPATH, "//input[@type='password']")
-pw_field.send_keys(password)
-
-next_btn = driver.find_element(By.XPATH, "//span[text()='Next']") # otherwise stale element....
-actions.move_to_element(next_btn).click(next_btn).perform()
+    # Step 0: x3 path option for windows, else run for macs
+    if sys.argv[1] == 'x3':
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    else:
+        driver = webdriver.Chrome()
+    driver.implicitly_wait(5) 
+    actions = ActionChains(driver) 
 
 
-sleep(10)
+    # Step 1: Handle Login
+    driver.get(login_url)
+    cont_with_google_btn = driver.find_element(By.XPATH, "//p[text()='Continue with Google']")
+    actions.move_to_element(cont_with_google_btn).click(cont_with_google_btn).perform()
 
+    popup = driver.window_handles[1]
+    driver.switch_to.window(popup)
 
-# Step 2: Grab live sales from each store
-driver.switch_to.window(driver.window_handles[0])
-sleep(5) # needed, else stale element error on menu_btn
-for store in all_stores:
-    menu_btn = driver.find_element(By.XPATH, "//*[@id='wrapper']/div[1]/div[2]/div[2]/div[1]/div/div[1]/button")
-    actions.move_to_element(menu_btn).click(menu_btn).perform()
+    username_field = driver.find_element(By.XPATH, "//input[@type='email']")
+    username_field.send_keys(username)
+
+    next_btn = driver.find_element(By.XPATH, "//span[text()='Next']")
+    actions.move_to_element(next_btn).click(next_btn).perform()
+
     sleep(3)
-    store_link = driver.find_element(By.XPATH, f"//p[text()='{store}']")
-    sleep(1)
-    actions.move_to_element(store_link).click(store_link).perform()
+
+    pw_field = driver.find_element(By.XPATH, "//input[@type='password']")
+    pw_field.send_keys(password)
+
+    next_btn = driver.find_element(By.XPATH, "//span[text()='Next']") # otherwise stale element....
+    actions.move_to_element(next_btn).click(next_btn).perform()
+
+
     sleep(10)
 
-    sales = driver.find_element(By.XPATH, "//h5[@data-baseweb='typo-headingsmall']").text
-    print(store, ": ", sales)
 
-    if (store == hall):
-        all_sales["Hall"] = sales
-    elif (store == barrows):
-        all_sales["Barrows"] = sales
-    elif (store == kruse):
-        all_sales["Kruse"] = sales
-    elif (store == orenco):
-        all_sales["Orenco"] = sales
-    
-# Step 3: Send live sales data to spreadsheet
-send_data(all_sales, "uber")
+    # Step 2: Grab live sales from each store
+    driver.switch_to.window(driver.window_handles[0])
+    sleep(5) # needed, else stale element error on menu_btn
+    for store in all_stores:
+        menu_btn = driver.find_element(By.XPATH, "//*[@id='wrapper']/div[1]/div[2]/div[2]/div[1]/div/div[1]/button")
+        actions.move_to_element(menu_btn).click(menu_btn).perform()
+        sleep(5) #Needed. sleep(3) seconds wasnt always long enough wait for menu+element to load
+        store_link = driver.find_element(By.XPATH, f"//p[text()='{store}']")
+        sleep(1)
+        actions.move_to_element(store_link).click(store_link).perform()
+        sleep(10)
 
-# Step 4: Quit selenium properly, and exit program. Done. 
-driver.quit()
+        sales = driver.find_element(By.XPATH, "//h5[@data-baseweb='typo-headingsmall']").text
+        print(store, ": ", sales)
+
+        if (store == hall):
+            all_sales["Hall"] = sales
+        elif (store == barrows):
+            all_sales["Barrows"] = sales
+        elif (store == kruse):
+            all_sales["Kruse"] = sales
+        elif (store == orenco):
+            all_sales["Orenco"] = sales
+        
+    # Step 3: Send live sales data to spreadsheet
+    send_data(all_sales, "uber")
+
+    # Step 4: Quit selenium properly, and exit program. Done. 
+    driver.quit()

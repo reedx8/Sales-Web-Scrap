@@ -25,11 +25,9 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
         - **Windows users only**: Create a new Notepad file, add credentials to file, *file -> save*, save as type: All Files, and name it *'.env'* (no quotes).
     -  `google_api_cred.json` file
 5. Edit `sheet.py` with your own path to `google_api_cred.json`
-6. Run each of the following in terminal, one by one:
-    - `python3 revel.py <PATH_OPTION>`
+6. Run the following in terminal:
+    - `python3 scrap.py <PATH_OPTION>`
         - *Note*: Use `python3`, `python`, or `py` depending on your installation setup of python
-    - `python3 doordash.py <PATH_OPTION>`
-    - `python3 uber.py <PATH_OPTION>`
     - Path option = The path option defined in `sheet.py`
     - *Note*: Refrain from closing terminal or resizing browser window while programs are running.
 
