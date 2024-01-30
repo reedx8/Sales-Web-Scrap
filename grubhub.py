@@ -114,33 +114,11 @@ def run_grubhub():
     for restaurant, subtotal in subtotals.items():
         print(f"{restaurant}: {subtotal}")
 
-    # for store in all_stores:
-    #     menu_btn = driver.find_element(By.XPATH, "//*[@id='wrapper']/div[1]/div[2]/div[2]/div[1]/div/div[1]/button")
-    #     actions.move_to_element(menu_btn).click(menu_btn).perform()
-    #     sleep(5)  # Needed. sleep(3) seconds wasn't always long enough wait for menu+element to load
-    #     store_link = driver.find_element(By.XPATH, f"//p[text()='{store}']")
-    #     sleep(1)
-    #     actions.move_to_element(store_link).click(store_link).perform()
-    #     sleep(10)
-
-    #     sales = driver.find_element(By.XPATH, "//h5[@data-baseweb='typo-headingsmall']").text
-    #     print(store, ": ", sales)
-
-    #     if store == hall:
-    #         all_sales["Hall"] = sales
-    #     elif store == barrows:
-    #         all_sales["Barrows"] = sales
-    #     elif store == kruse:
-    #         all_sales["Kruse"] = sales
-    #     elif store == orenco:
-    #         all_sales["Orenco"] = sales
-
      # Step 3: Select all locations
     location_selector = driver.find_element(By.XPATH, "//div[@aria-label='multi-location-selector']")
     actions.move_to_element(location_selector).click(location_selector).perform()
     sleep(2)
 
-    # Step 4: Set date range to current date
     # Step 4: Set date range to current date
     date_picker_input = driver.find_element(By.XPATH, "//input[@data-testid='export-modal-date-picker-input']")
     date_picker_input.clear()
