@@ -11,7 +11,7 @@ from datetime import datetime
 try:
     if (sys.argv[1] == 'x'):
         # path option 1 ('x') -- Xavier's macbook machine
-        path = '/Users/xreed/Desktop/web-scrap-ava/google_api_cred.json'
+        path = '/Users/xreed/code/Sales-Web-Scrap/google_api_cred.json'
     elif (sys.argv[1] == 'x2'): 
         # path option 2 ('x2') -- Xavier's mac mini machine
         path = '/Users/xvrmac/code/Sales-Web-Scrap/google_api_cred.json'
