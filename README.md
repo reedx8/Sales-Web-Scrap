@@ -14,16 +14,21 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
         - Use admin priviliges
     - git: https://git-scm.com/downloads
     - pip: Comes packaged with python when downloaded from python.org
-3. Open terminal (mac) or command prompt (windows) to install the following in a virtual environment:
+3. Open terminal (mac) or command prompt (windows) to run/install the following in a virtual environment:
+
     1. Virtual Environment how-to: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments
         - Note: The `.venv` folder is already included in the `.gitignore` file
-    2. Selenium (4.16): `pip3 install selenium`
+    2. Run the following to install all required packages: `pip3 install -r requirements.txt`
         - _Note_: Use `pip3` or `pip` depending on your setup
-    3. Load-dotenv: `pip3 install python-dotenv`
-    4. pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
-    5. pandas: `pip3 install pandas`
-    6. webdriver-manager: `pip3 install webdriver-manager` (_needed for windows users only_)
-    7. See "Installation Docs" section for more info
+    3. Requirements outlined:
+        - Selenium (4.16): `pip3 install selenium`
+        - Load-dotenv: `pip3 install python-dotenv`
+        - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
+        - pandas: `pip3 install pandas`
+        - webdriver-manager: `pip3 install webdriver-manager` (_needed for windows users_)
+
+    See "Installation Docs" section for more info
+
 4. Add the following files to project folder (message repo owner):
     - `.env` file
         - **Windows users only**: Create a new Notepad file, add credentials to file, _file -> save_, save as type: All Files, and name it _'.env'_ (no quotes).
