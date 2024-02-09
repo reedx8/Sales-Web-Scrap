@@ -1,0 +1,5 @@
+pandas==2.2.0
+pygsheets==2.0.5
+python-dotenv==1.0.1
+selenium==4.17.2
+webdriver-manager==4.0.1
