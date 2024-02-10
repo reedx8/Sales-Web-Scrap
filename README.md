@@ -34,11 +34,9 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
         - **Windows users only**: Create a new Notepad file, add credentials to file, _file -> save_, save as type: All Files, and name it _'.env'_ (no quotes).
     - `google_api_cred.json` file
 5. Edit `sheet.py` with your own path to `google_api_cred.json`
-6. Run the following in terminal:
-    - `python3 scrap.py <PATH_OPTION>`
-        - _Note_: Use `python3`, `python`, or `py` depending on your installation setup of python
-    - Path option = The path option defined in `sheet.py`
-    - _Note_: Refrain from closing terminal or resizing browser window while programs are running.
+6. Run the following in terminal: `python3 scrap.py`
+    - Use `python3`, `python`, or `py` depending on your installation setup of python
+    - Refrain from closing terminal or resizing browser window while program is running.
 
 ## Installation Docs
 
