@@ -22,7 +22,7 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
     2. Run the following command to install all required packages: `pip3 install -r requirements.txt`
         - _Note_: Use `pip3` or `pip` depending on your setup
         - Requirements outlined (Fallback only. Ignore if command above worked):
-            - Selenium (4.16): `pip3 install selenium`
+            - Selenium: `pip3 install selenium`
             - Load-dotenv: `pip3 install python-dotenv`
             - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
             - pandas: `pip3 install pandas`
