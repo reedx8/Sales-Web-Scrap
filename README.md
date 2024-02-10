@@ -8,24 +8,25 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
 
 1. Clone the repo
 2. Install:
-    - Chrome browser (Latest updated version)
-    - Python 3: https://www.python.org/downloads/
-        - Add python.exe to PATH
-        - Use admin priviliges
+    - Chrome browser
+    - Python 3+: https://www.python.org/downloads/
+        - If asked/prompted:
+            - Add python.exe to PATH
+            - Use admin priviliges
     - git: https://git-scm.com/downloads
     - pip: Comes packaged with python when downloaded from python.org
-3. Open terminal (mac) or command prompt (windows) to run/install the following in a virtual environment:
+3. Open terminal/command prompt to run the following commands in a virtual environment:
 
     1. Virtual Environment how-to: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments
         - Note: The `.venv` folder is already included in the `.gitignore` file
-    2. Run the following to install all required packages: `pip3 install -r requirements.txt`
+    2. Run the following command to install all required packages: `pip3 install -r requirements.txt`
         - _Note_: Use `pip3` or `pip` depending on your setup
-    3. Requirements outlined:
-        - Selenium (4.16): `pip3 install selenium`
-        - Load-dotenv: `pip3 install python-dotenv`
-        - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
-        - pandas: `pip3 install pandas`
-        - webdriver-manager: `pip3 install webdriver-manager` (_needed for windows users_)
+        - Requirements outlined (Fallback only. Ignore if command above worked):
+            - Selenium (4.16): `pip3 install selenium`
+            - Load-dotenv: `pip3 install python-dotenv`
+            - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
+            - pandas: `pip3 install pandas`
+            - webdriver-manager: `pip3 install webdriver-manager` (_needed for windows users_)
 
     See "Installation Docs" section for more info
 
@@ -34,7 +35,7 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
         - **Windows users only**: Create a new Notepad file, add credentials to file, _file -> save_, save as type: All Files, and name it _'.env'_ (no quotes).
     - `google_api_cred.json` file
 5. Edit `sheet.py` with your own path to `google_api_cred.json`
-6. Run the following in terminal: `python3 scrap.py`
+6. To run program: `python3 scrap.py`
     - Use `python3`, `python`, or `py` depending on your installation setup of python
     - Refrain from closing terminal or resizing browser window while program is running.
 
