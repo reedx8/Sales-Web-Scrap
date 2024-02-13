@@ -1,5 +1,6 @@
 import os
 import sys
+import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver import Chrome, ChromeOptions
@@ -12,6 +13,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
+
 
 load_dotenv()
 
@@ -53,6 +56,35 @@ def fetch_subtotals(driver):
         subtotals[restaurant_name] = subtotal
 
     return subtotals
+sleep(5) 
+def click_update_button(driver):
+    # Click update button (with error handling)
+    try:
+        update_button = WebDriverWait(driver, 60).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[text()='Update']"))
+        )
+        driver.execute_script("window.onerror = function(msg, url, line, col, error) { console.error('Error:', msg, 'URL:', url, 'Line:', line, 'Column:', col, 'Error object:', error); };")
+        update_button.click()
+    except NoSuchElementException:
+        print("Failed to locate the 'Update' button.")
+        driver.quit()
+        sys.exit(1)
+    except TimeoutException:
+        print("Timed out waiting for the 'Update' button to be clickable. Retrying with an increased timeout...")
+        sleep(10)  # Adding a sleep before retrying
+        try:
+            update_button = WebDriverWait(driver, 20).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[text()='Update']"))
+            )
+            driver.execute_script("window.onerror = function(msg, url, line, col, error) { console.error('Error:', msg, 'URL:', url, 'Line:', line, 'Column:', col, 'Error object:', error); };")
+            update_button.click()
+        except TimeoutException:
+            print("Timed out again. Failed to click the 'Update' button.")
+            driver.quit()
+            sys.exit(1)
+
+
+
 
 def run_grubhub():
     print("\nRunning Grubhub...")
@@ -81,10 +113,10 @@ def run_grubhub():
     password_field.send_keys(password)
 
     # Click the "Show" button to reveal the password (if needed)
-    show_password_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//h6[text()='Show']"))
-    )
-    show_password_button.click()
+    # show_password_button = WebDriverWait(driver, 10).until(
+    #     EC.element_to_be_clickable((By.XPATH, "//h6[text()='Show']"))
+    # )
+    # show_password_button.click()
 
     # Submit the login form
     login_button = WebDriverWait(driver, 10).until(
@@ -109,43 +141,44 @@ def run_grubhub():
 
     # Step 3: Fetch subtotal data
     subtotals = fetch_subtotals(driver)
+# subtotals = fetch_subtotals(driver)
 
     # Print the fetched data (for testing purposes)
     for restaurant, subtotal in subtotals.items():
         print(f"{restaurant}: {subtotal}")
 
-     # Step 3: Select all locations
-    location_selector = driver.find_element(By.XPATH, "//div[@aria-label='multi-location-selector']")
-    actions.move_to_element(location_selector).click(location_selector).perform()
-    sleep(2)
 
-    # Step 4: Set date range to current date
+    #  # Step 4: Select all locations
+    # location_selector = driver.find_element(By.XPATH, "//div[@aria-label='multi-location-selector']")
+    # actions.move_to_element(location_selector).click(location_selector).perform()
+    # sleep(2)
+
+    # Step 5: Set date range to current date
     date_picker_input = driver.find_element(By.XPATH, "//input[@data-testid='export-modal-date-picker-input']")
+    
+     # Get the current date and format it as MM/DD/YYYY
+    current_date = datetime.datetime.now().strftime("%m/%d/%Y")
+    
     date_picker_input.clear()
-    date_picker_input.send_keys("01/23/2024 - 01/23/2024")
-
+    date_picker_input.send_keys(f"{current_date} - {current_date}")
+    sleep(5)
     # Click update button (with error handling)
     try:
-        update_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[text()='Update']"))
+        update_button = WebDriverWait(driver, 30).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[text()='Update']"))
         )
-        driver.execute_script("window.onerror = function(msg, url, line, col, error) { console.error('Error:', msg, 'URL:', url, 'Line:', line, 'Column:', col, 'Error object:', error); };")
-        update_button.click()
-    except NoSuchElementException:
-        print("Failed to locate the 'Update' button.")
-        driver.quit()
-        sys.exit(1)
+        actions.move_to_element(update_button).click(update_button).perform()
     except TimeoutException:
-        print("Timed out waiting for the 'Update' button to be clickable.")
+        print("Timed out waiting for the 'Update' button to be clickable. Exiting...")
         driver.quit()
         sys.exit(1)
 
     sleep(5)  # Add a sleep here to wait for the page to update
     
-    # Step 3: Send live sales data to spreadsheet
-    send_data(all_sales, "grubhub")
+    # Step 6: Send live sales data to spreadsheet
+    send_data(subtotals, "grubhub")
 
-    # Step 4: Quit selenium properly, and exit program. Done. 
+    # Step 7: Quit selenium properly, and exit program. Done. 
     driver.quit()
 
 # Run the function if this script is executed
