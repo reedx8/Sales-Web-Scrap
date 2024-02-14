@@ -22,6 +22,8 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
     2. Run the following command to install all required packages: `pip3 install -r requirements.txt`
         - _Note_: Use `pip3` or `pip` depending on your setup
         - Requirements outlined (Fallback only. Ignore if command above worked):
+            - PyQt5: `pip3 install PyQt5`
+                - Qt Designer (optional): try `pip3 install pyqt5-tools`. If doesnt work, download Qt directly from qt.io (Qt comes with Qt Designer).
             - Selenium: `pip3 install selenium`
             - Load-dotenv: `pip3 install python-dotenv`
             - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
