@@ -4,7 +4,7 @@ from revel import run_revel
 from doordash import run_doordash
 from uber import run_uber
 from grubhub import run_grubhub
-from threading import *
+from threading import Thread
 
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("Program.ui")
@@ -28,18 +28,22 @@ def webscrap_all_thread():
     webscrapThread.start()
 
 def webscrap_revel_thread():
+    dlg.OutputConsole.addItem("Scraping Revel...")
     webscrapThread = Thread(target=run_revel)
     webscrapThread.start()
 
 def webscrap_doordash_thread():
+    dlg.OutputConsole.addItem("Scraping DoorDash...")
     webscrapThread = Thread(target=run_doordash)
     webscrapThread.start()
 
 def webscrap_uber_thread():
+    dlg.OutputConsole.addItem("Scraping Uber Eats...")
     webscrapThread = Thread(target=run_uber)
     webscrapThread.start()
 
 def webscrap_grubhub_thread():
+    dlg.OutputConsole.addItem("Scraping Grubhub...")
     webscrapThread = Thread(target=run_grubhub)
     webscrapThread.start()
 
