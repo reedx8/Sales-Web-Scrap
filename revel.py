@@ -45,7 +45,7 @@ orenco_menu_xpath = "//*[@id='establishments-tree']/div/div[3]/ul/li[1]/ul/li[3]
 barrows_menu_xpath = "//*[@id='establishments-tree']/div/div[3]/ul/li[1]/ul/li[4]/span[2]/span[3]"
 
 def run_revel():
-    print("\nRunning Revel...")
+    # print("\nRunning Revel...")
 
     driver = webdriver.Chrome()
     driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
