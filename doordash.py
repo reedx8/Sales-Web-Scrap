@@ -15,6 +15,7 @@ from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from sheet import send_data
 from dotenv import load_dotenv
+from fake_useragent import UserAgent
 
 load_dotenv()
 
@@ -23,6 +24,10 @@ load_dotenv()
 # actions = ActionChains(driver)
 
 options = ChromeOptions()
+ua = UserAgent()
+user_agent = ua.random
+
+options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("window-size=1200x600")
 options.add_argument("--headless=new") # headless browser mode
 options.add_argument("--disable-gpu")
@@ -138,13 +143,13 @@ def run_doordash():
 
 
         if (store_name == hall):
-            all_sales['Hall'] = sales.text
+            all_sales['Hall'] = sales.text[1:]
         elif (store_name == barrows):
-            all_sales['Barrows'] = sales.text
+            all_sales['Barrows'] = sales.text[1:]
         elif (store_name == kruse):
-            all_sales['Kruse'] = sales.text
+            all_sales['Kruse'] = sales.text[1:]
         elif (store_name == orenco):
-            all_sales['Orenco'] = sales.text
+            all_sales['Orenco'] = sales.text[1:]
         else:
             print("ERROR: Store name is incorrect. See 'all_stores'")
 

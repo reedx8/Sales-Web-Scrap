@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import platform
+from fake_useragent import UserAgent
 
 load_dotenv()
 
@@ -21,6 +22,10 @@ load_dotenv()
 # driver.implicitly_wait(5) 
 # actions = ActionChains(driver)
 options = ChromeOptions()
+ua = UserAgent()
+user_agent = ua.random
+
+options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("window-size=1200x600") 
 options.add_argument("--headless=new") # headless browser mode
 options.add_argument("--disable-gpu")

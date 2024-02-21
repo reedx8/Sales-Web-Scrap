@@ -15,11 +15,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 import platform
+from fake_useragent import UserAgent
 
 load_dotenv()
 
 options = ChromeOptions()
+ua = UserAgent() # user_agent doesnt avoid login security check, commented out for now
+user_agent = ua.random
+
+# options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("window-size=1200x600")
+# options.add_argument("--headless=new") # headless browser mode
+options.add_argument("--disable-gpu")
+options.add_argument("--disable-extensions")
 
 login_url = os.getenv("GRUBHUB_LOGIN_URL")
 username = os.getenv("GRUBHUB_USERNAME")
@@ -78,14 +86,14 @@ def run_grubhub():
 
     currentOS = platform.system().lower()
     if currentOS == "darwin": # mac os
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options)
     elif currentOS == "windows":
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     else:
         print("Linux OS detected. Program has not been tested on linux. Exiting program...")
         exit()
 
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(10)
     actions = ActionChains(driver)
 
     # Step 1: Handle Login
