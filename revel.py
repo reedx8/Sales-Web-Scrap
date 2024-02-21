@@ -18,6 +18,7 @@ from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from dotenv import load_dotenv
 from sheet import send_data
+from threading import Thread
 
 load_dotenv()
 
@@ -105,7 +106,7 @@ def run_revel():
             sleep(3) # net sales not loaded yet, wait x seconds
         else:
             break # got net sales figure
-    print("Hall: $", net_sales)
+    # print("Hall: $", net_sales)
     all_sales["Hall"] = net_sales
 
     # DNU: full xpath worked here in the menu though for some reason
@@ -163,17 +164,18 @@ def run_revel():
                 break
 
         if (i == 0):
-            print("Kruse: $", net_sales)
             all_sales["Kruse"] = net_sales
+            # print("Kruse: $", net_sales)
         elif(i == 1):
-            print("Orenco: $", net_sales)
             all_sales["Orenco"] = net_sales
+            # print("Orenco: $", net_sales)
         elif (i == 2):
-            print("Barrows: $", net_sales)
             all_sales["Barrows"] = net_sales
+            # print("Barrows: $", net_sales)
         
         
     send_data(all_sales, "revel")
 
     # Final step -- Close the Selenium WebDriver
     driver.quit()
+    return all_sales

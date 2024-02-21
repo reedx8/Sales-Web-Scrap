@@ -9,42 +9,99 @@ from threading import Thread
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("Program.ui")
 
+def output_to_app(platformName, sales):
+    platformName = platformName.lower()
+
+    if platformName == "revel":
+        dlg.OutputConsole.addItem("REVEL")
+    elif platformName == "doordash":
+        dlg.OutputConsole.addItem("DOORDASH")
+    elif platformName == "uber":
+        dlg.OutputConsole.addItem("UBER EATS")
+    elif platformName == 'grubhub':
+        dlg.OutputConsole.addItem("GRUBHUB")
+    else:
+        print("ERROR: Need to pass platform name")
+        exit()
+
+    dlg.OutputConsole.addItem("----------------")
+
+    for location, amount in sales.items():
+        outputString = str(location) + ": $" + str(amount)
+        dlg.OutputConsole.addItem(outputString)
+
 def exec_all():
-    dlg.OutputConsole.addItem("Scraping now...")
-    run_revel()
-    dlg.OutputConsole.addItem("Revel done...")
-    run_doordash()
-    dlg.OutputConsole.addItem("Doordash done...")
-    run_uber()
-    dlg.OutputConsole.addItem("Uber done...")
+    # exec_revel()
+    revelSales = run_revel()
+    output_to_app("revel", revelSales)
+
+    # exec_doordash()
+    doordashSales = run_doordash()
+    output_to_app("doordash", doordashSales)
+    
+    # exec_uber()
+    uberSales = run_uber()
+    output_to_app("uber", uberSales)
+
+    '''
+    exec_grubhub()
     run_grubhub()
     dlg.OutputConsole.addItem("Grubhub done...")
-    dlg.OutputConsole.clear()
+    '''
+
+    # dlg.OutputConsole.clear()
+
     dlg.OutputConsole.addItem("Opening spreadsheet...")
     # TODO: open browser to spreadsheet...
     
+# exec_<platformName>() wrapper functions allow us to catch return value (threads dont handle return)
+def exec_revel():
+    # dlg.OutputConsole.addItem("Scraping Revel...")
+    revelSales = run_revel()
+    dlg.OutputConsole.clear()
+    output_to_app("revel", revelSales)
+
+def exec_doordash():
+    doordashSales = run_doordash()
+    dlg.OutputConsole.clear()
+    output_to_app("doordash", doordashSales)
+
+def exec_uber():
+    uberSales = run_uber()
+    dlg.OutputConsole.clear()
+    output_to_app("uber", uberSales)
+
+def exec_grubhub():
+    grubhubSales = run_grubhub()
+    dlg.OutputConsole.clear()
+    output_to_app("grubhub", grubhubSales)
+
 def webscrap_all_thread():
+    dlg.OutputConsole.addItem("Scraping now...")
     webscrapThread = Thread(target=exec_all)
     webscrapThread.start()
+    # webscrapThread.join()
 
 def webscrap_revel_thread():
     dlg.OutputConsole.addItem("Scraping Revel...")
-    webscrapThread = Thread(target=run_revel)
+    # webscrapThread = Thread(target=run_revel)
+    webscrapThread = Thread(target=exec_revel)
     webscrapThread.start()
+    # webscrapThread.join()
 
 def webscrap_doordash_thread():
     dlg.OutputConsole.addItem("Scraping DoorDash...")
-    webscrapThread = Thread(target=run_doordash)
+    webscrapThread = Thread(target=exec_doordash)
     webscrapThread.start()
 
 def webscrap_uber_thread():
     dlg.OutputConsole.addItem("Scraping Uber Eats...")
-    webscrapThread = Thread(target=run_uber)
+    webscrapThread = Thread(target=exec_uber)
     webscrapThread.start()
 
 def webscrap_grubhub_thread():
     dlg.OutputConsole.addItem("Scraping Grubhub...")
-    webscrapThread = Thread(target=run_grubhub)
+    webscrapThread = Thread(target=exec_grubhub)
     webscrapThread.start()
 
 dlg.RunAllButton.clicked.connect(webscrap_all_thread)

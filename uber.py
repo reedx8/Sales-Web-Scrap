@@ -117,3 +117,4 @@ def run_uber():
 
     # Step 4: Quit selenium properly, and exit program. Done. 
     driver.quit()
+    return all_sales
