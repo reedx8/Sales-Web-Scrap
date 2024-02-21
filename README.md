@@ -29,6 +29,7 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
             - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
             - pandas: `pip3 install pandas`
             - webdriver-manager: `pip3 install webdriver-manager` (_needed for windows users_)
+            - fake-useragent: `pip3 install fake-useragent`
             - See "Installation Docs" section for more info
 
 4. Add the following files to project folder (message repo owner):
@@ -55,3 +56,4 @@ _Note_: Do the following to get around Grubhub's login security check:
 -   pandas: https://pandas.pydata.org/docs/getting_started/install.html
 -   webdriver-manager: https://pypi.org/project/webdriver-manager/
 -   PyQt5: https://doc.qt.io/qtforpython-5/
+-   fake-useragent: https://pypi.org/project/fake-useragent/
