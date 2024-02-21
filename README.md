@@ -46,7 +46,7 @@ _Note_: Do the following to get around Grubhub's login security check:
     1. Clear all history in the browser the script is running
     2. Close the Live Sales app
     3. Sign out of Grubhub anywhere else
-    4. Now rerun the app
+    4. Now rerun the app (keep retrying)
 
 ## Installation Docs
 
