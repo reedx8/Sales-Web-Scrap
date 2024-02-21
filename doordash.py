@@ -130,8 +130,8 @@ def run_doordash():
                 else:
                     sleep(3)
         
-        # output/send the sales value:
-        print(store_name + ": " + sales.text)
+        # output the sales value:
+        # print(store_name + ": " + sales.text)
 
 
         if (store_name == hall):
@@ -157,6 +157,7 @@ def run_doordash():
 
     # Step 4 -- Quit driver and exit program. Done:
     driver.quit()
+    return all_sales
 
 
 

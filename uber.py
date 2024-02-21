@@ -10,6 +10,7 @@ from sheet import send_data
 from dotenv import load_dotenv
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+import platform
 
 load_dotenv()
 
@@ -48,11 +49,15 @@ all_sales = {
 def run_uber():
     print("\nRunning Uber Eats...")
 
-    # Step 0: x3 path option for windows, else run for macs
-    if sys.argv[1] == 'x3':
+    currentOS = platform.system().lower()
+    if currentOS== "darwin": # mac os
+        driver = webdriver.Chrome()
+    elif currentOS == "windows":
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     else:
-        driver = webdriver.Chrome()
+        print("Linux OS detected. Program has not been tested on linux. Exiting program...")
+        exit()
+
     driver.implicitly_wait(5) 
     actions = ActionChains(driver) 
 
@@ -112,3 +117,4 @@ def run_uber():
 
     # Step 4: Quit selenium properly, and exit program. Done. 
     driver.quit()
+    return all_sales
