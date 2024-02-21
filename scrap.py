@@ -43,11 +43,9 @@ def exec_all():
     uberSales = run_uber()
     output_to_app("uber", uberSales)
 
-    '''
-    exec_grubhub()
-    run_grubhub()
-    dlg.OutputConsole.addItem("Grubhub done...")
-    '''
+    # exec_grubhub()
+    grubhubSales = run_grubhub()
+    output_to_app("grubhub", grubhubSales)
 
     # dlg.OutputConsole.clear()
 

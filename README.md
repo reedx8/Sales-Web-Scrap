@@ -29,17 +29,23 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
             - pygsheets: `pip3 install https://github.com/nithinmurali/pygsheets/archive/staging.zip`
             - pandas: `pip3 install pandas`
             - webdriver-manager: `pip3 install webdriver-manager` (_needed for windows users_)
-
-    See "Installation Docs" section for more info
+            - See "Installation Docs" section for more info
 
 4. Add the following files to project folder (message repo owner):
     - `.env` file
         - **Windows users only**: Create a new Notepad file, add credentials to file, _file -> save_, save as type: All Files, and name it _'.env'_ (no quotes).
     - `google_api_cred.json` file
 5. Edit `sheet.py` with your own path to `google_api_cred.json`
-6. To run program: `python3 scrap.py`
+6. Finally, run program with: `python3 scrap.py`
     - Use `python3`, `python`, or `py` depending on your installation setup of python
     - Refrain from closing terminal or resizing browser window while program is running.
+
+_Note_: Do the following to get around Grubhub's login security check:
+
+    1. Clear all history in the browser the script is running
+    2. Close the Live Sales app
+    3. Sign out of Grubhub anywhere else
+    4. Now rerun the app
 
 ## Installation Docs
 
@@ -48,3 +54,4 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
 -   pygsheets: https://github.com/nithinmurali/pygsheets
 -   pandas: https://pandas.pydata.org/docs/getting_started/install.html
 -   webdriver-manager: https://pypi.org/project/webdriver-manager/
+-   PyQt5: https://doc.qt.io/qtforpython-5/

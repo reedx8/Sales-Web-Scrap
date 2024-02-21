@@ -53,7 +53,14 @@ def fetch_subtotals(driver):
         subtotal = row.find_element(By.XPATH, "./td[@class='gfr-table__row__cell'][1]").text
 
         # Store data in the dictionary
-        subtotals[restaurant_name] = subtotal
+        if "meadows" in str(restaurant_name).lower():
+            subtotals["Kruse"] = subtotal[1:]
+        elif "orenco" in str(restaurant_name).lower():
+            subtotals["Orenco"] = subtotal[1:]
+        elif "barrows" in str(restaurant_name).lower():
+            subtotals["Barrows"] = subtotal[1:]
+        elif "hall" in str(restaurant_name).lower():
+            subtotals["Hall"] = subtotal[1:]
 
     return subtotals
 
@@ -102,6 +109,17 @@ def run_grubhub():
     )
     login_button.click()
 
+    financials = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[text()='Financials']"))
+    )
+    financials.click()
+
+    transactions = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//span[text()='Transactions']"))
+    )
+    transactions.click()
+
+    '''
     # Step 2: Wait for the "Transactions" page to load directly
     try:
         print("Before WebDriverWait")
@@ -113,9 +131,12 @@ def run_grubhub():
         print(f"Failed to load the Transactions page. Exception: {e}")
         driver.quit()
         sys.exit(1)
+    '''
 
     driver.switch_to.window(driver.window_handles[0])
-    sleep(5)
+    sleep(3)
+
+    driver.get("https://restaurant.grubhub.com/financials/transactions/909517,909519,909523,909536")
 
     # Step 3: Set date range to the current date
     date_picker_input = driver.find_element(By.XPATH, "//input[@data-testid='export-modal-date-picker-input']")
@@ -125,22 +146,25 @@ def run_grubhub():
 
     date_picker_input.clear()
     date_picker_input.send_keys(f"{current_date} - {current_date}")
-    sleep(2)
+    sleep(3)
 
      # Step 5: Fetch subtotal data after clicking update button
     subtotals = fetch_subtotals(driver)
 
     # Print the fetched data (for testing purposes)
+    '''
     for restaurant, subtotal in subtotals.items():
         print(f"{restaurant}: {subtotal}")
+    '''
 
-    sleep(5)  # Add a sleep here to wait for the page to update
+    # sleep(5)  # Add a sleep here to wait for the page to update
 
     # Step 6: Send live sales data to the spreadsheet
     send_data(subtotals, "grubhub")
 
     # Step 7: Quit selenium properly, and exit the program. Done.
     driver.quit()
+    return subtotals
 
 # Run the function if this script is executed
 if __name__ == "__main__":
