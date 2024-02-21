@@ -25,6 +25,11 @@ load_dotenv()
 # removes 1 less variable by ensuring window size is always the same
 options = ChromeOptions()
 options.add_argument("window-size=1200x600")
+options.add_argument("--headless=new") # headless browser mode
+options.add_argument("--disable-gpu")
+options.add_argument("--disable-extensions")
+# options.add_arguments("window-size=1200x600", "--headless=new", "--disable-gpu", "--disable-extensions")
+# options.addArguments("window-size=1200x600", "--headless=new", "--disable-gpu", "--disable-extensions")
 
 login_url = os.getenv('REV_LOGIN_URL')
 target_url = os.getenv('REV_TARGET_URL')
@@ -48,8 +53,9 @@ barrows_menu_xpath = "//*[@id='establishments-tree']/div/div[3]/ul/li[1]/ul/li[4
 def run_revel():
     # print("\nRunning Revel...")
 
-    driver = webdriver.Chrome()
-    driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
+    driver = webdriver.Chrome(options=options) # Pass nothing to Chrome() if you want to see code working
+    # driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
+    driver.implicitly_wait(10)
     actions = ActionChains(driver)
 
     driver.get(login_url)
@@ -86,7 +92,8 @@ def run_revel():
 
 
     # Wait for the page to load after login, initial login can take awhile (adjust the wait time as needed)
-    sleep(10) # simply pauses execution for x seconds
+    # sleep(10) # simply pauses execution for x seconds
+    sleep(5) # simply pauses execution for x seconds
 
     # Step 2 -- Get shadow root from html dom
     shadow_root_script = "return document.querySelector('body > div.mf-header-wrapper > management-console-header').shadowRoot"
@@ -141,7 +148,8 @@ def run_revel():
         actions.move_to_element(store_link).click(store_link).perform()
 
         # new page: wait for page to load
-        sleep(5)
+        # sleep(5)
+        sleep(3)
 
         # You need to re-establish shadow_root and its children after each page load
         shadow_root = driver.execute_script(shadow_root_script)

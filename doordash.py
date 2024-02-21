@@ -24,6 +24,9 @@ load_dotenv()
 
 options = ChromeOptions()
 options.add_argument("window-size=1200x600")
+options.add_argument("--headless=new") # headless browser mode
+options.add_argument("--disable-gpu")
+options.add_argument("--disable-extensions")
 
 username = os.getenv('DD_USERNAME')
 password = os.getenv('DD_PW')
@@ -47,7 +50,7 @@ all_sales = {
 def run_doordash():
     print("\nRunning Doordash...")
 
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
     actions = ActionChains(driver)
 

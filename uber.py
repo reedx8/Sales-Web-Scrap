@@ -22,6 +22,9 @@ load_dotenv()
 # actions = ActionChains(driver)
 options = ChromeOptions()
 options.add_argument("window-size=1200x600") 
+options.add_argument("--headless=new") # headless browser mode
+options.add_argument("--disable-gpu")
+options.add_argument("--disable-extensions")
 
 login_url = os.getenv("UBER_LOGIN_URL")
 username = os.getenv("UBER_USERNAME")
@@ -51,7 +54,7 @@ def run_uber():
 
     currentOS = platform.system().lower()
     if currentOS== "darwin": # mac os
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options)
     elif currentOS == "windows":
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     else:
