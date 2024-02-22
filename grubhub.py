@@ -23,9 +23,14 @@ options = ChromeOptions()
 ua = UserAgent() # user_agent doesnt avoid login security check, commented out for now
 user_agent = ua.random
 
+# Option attempts to avoid login security check (dont work):
 # options.add_argument(f'--user-agent={user_agent}')
+options.add_argument("--disable-blink-features")
+options.add_argument("--disable-blink-features=AutomationControlled")
+
+# The rest of the options:
 options.add_argument("window-size=1200x600")
-# options.add_argument("--headless=new") # headless browser mode
+# options.add_argument("--headless=new") # headless browser mode (dont use until login sec check avoided)
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-extensions")
 

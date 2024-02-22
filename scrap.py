@@ -9,6 +9,9 @@ from threading import Thread
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("Program.ui")
 
+dlg.OutputConsole.addItem("Welcome to the Live Sales App")
+dlg.OutputConsole.addItem("Press any button below to begin")
+
 def output_to_app(platformName, sales):
     platformName = platformName.lower()
 
@@ -75,12 +78,14 @@ def exec_grubhub():
     output_to_app("grubhub", grubhubSales)
 
 def webscrap_all_thread():
+    dlg.OutputConsole.clear()
     dlg.OutputConsole.addItem("Scraping now...")
     webscrapThread = Thread(target=exec_all)
     webscrapThread.start()
     # webscrapThread.join()
 
 def webscrap_revel_thread():
+    dlg.OutputConsole.clear()
     dlg.OutputConsole.addItem("Scraping Revel...")
     # webscrapThread = Thread(target=run_revel)
     webscrapThread = Thread(target=exec_revel)
@@ -88,16 +93,19 @@ def webscrap_revel_thread():
     # webscrapThread.join()
 
 def webscrap_doordash_thread():
+    dlg.OutputConsole.clear()
     dlg.OutputConsole.addItem("Scraping DoorDash...")
     webscrapThread = Thread(target=exec_doordash)
     webscrapThread.start()
 
 def webscrap_uber_thread():
+    dlg.OutputConsole.clear()
     dlg.OutputConsole.addItem("Scraping Uber Eats...")
     webscrapThread = Thread(target=exec_uber)
     webscrapThread.start()
 
 def webscrap_grubhub_thread():
+    dlg.OutputConsole.clear()
     dlg.OutputConsole.addItem("Scraping Grubhub...")
     webscrapThread = Thread(target=exec_grubhub)
     webscrapThread.start()
