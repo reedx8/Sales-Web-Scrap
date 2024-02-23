@@ -50,7 +50,9 @@ _Note_: Do the following to get around Grubhub's login security check:
 
 ## Installation Docs
 
--   Selenium: https://selenium-python.readthedocs.io/installation.html
+-   Selenium:
+    -   https://www.selenium.dev/documentation/
+    -   https://selenium-python.readthedocs.io/installation.html
 -   Load-dotenv: https://github.com/theskumar/python-dotenv
 -   pygsheets: https://github.com/nithinmurali/pygsheets
 -   pandas: https://pandas.pydata.org/docs/getting_started/install.html

@@ -5,6 +5,8 @@ from doordash import run_doordash
 from uber import run_uber
 from grubhub import run_grubhub
 from threading import Thread
+from selenium import webdriver
+from selenium.webdriver import Chrome, ChromeOptions
 
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("Program.ui")
@@ -110,11 +112,22 @@ def webscrap_grubhub_thread():
     webscrapThread = Thread(target=exec_grubhub)
     webscrapThread.start()
 
+def open_github():
+    options = ChromeOptions()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-extensions")
+    options.add_experimental_option("detach", True)
+    driver = webdriver.Chrome(options=options)
+    driver.get("https://github.com/reedx8/Sales-Web-Scrap")
+    # driver.quit()
+
+
 dlg.RunAllButton.clicked.connect(webscrap_all_thread)
 dlg.RevelButton.clicked.connect(webscrap_revel_thread)
 dlg.DoordashButton.clicked.connect(webscrap_doordash_thread)
 dlg.UberButton.clicked.connect(webscrap_uber_thread)
 dlg.GrubhubButton.clicked.connect(webscrap_grubhub_thread)
+dlg.GithubButton.clicked.connect(open_github)
 
 
 dlg.show()
