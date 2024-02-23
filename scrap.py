@@ -11,6 +11,7 @@ from selenium.webdriver import Chrome, ChromeOptions
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("Program.ui")
 
+dlg.statusbar.showMessage("Ready...", 10000)
 dlg.OutputConsole.addItem("Welcome to the Live Sales App")
 dlg.OutputConsole.addItem("Press any button below to begin")
 
@@ -54,7 +55,7 @@ def exec_all():
 
     # dlg.OutputConsole.clear()
 
-    dlg.OutputConsole.addItem("Opening spreadsheet...")
+    # dlg.OutputConsole.addItem("Opening spreadsheet...")
     # TODO: open browser to spreadsheet...
     
 # exec_<platformName>() wrapper functions allow us to catch return value (threads dont handle return)
@@ -113,9 +114,10 @@ def webscrap_grubhub_thread():
     webscrapThread.start()
 
 def open_github():
+    dlg.statusbar.showMessage("Opening github repo to project...", 5000)
     options = ChromeOptions()
-    options.add_argument("--disable-gpu")
-    options.add_argument("--disable-extensions")
+    # options.add_argument("--disable-gpu")
+    # options.add_argument("--disable-extensions")
     options.add_experimental_option("detach", True)
     driver = webdriver.Chrome(options=options)
     driver.get("https://github.com/reedx8/Sales-Web-Scrap")

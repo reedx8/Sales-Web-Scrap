@@ -36,6 +36,19 @@ color: #efd6b9;
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 1px;
+}
+
+/*
+QPushButton:hover {
+	background-color: #2e2315;
+}
+*/</string>
+   </property>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
@@ -48,8 +61,13 @@ color: #efd6b9;
     <layout class="QGridLayout" name="gridLayout">
      <item row="2" column="0">
       <widget class="QPushButton" name="DoordashButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QPushButton:hover {
+	background-color: #2e2315;
+}</string>
        </property>
        <property name="text">
         <string>Run DoorDash</string>
@@ -58,8 +76,13 @@ color: #efd6b9;
      </item>
      <item row="4" column="0">
       <widget class="QPushButton" name="UberButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QPushButton:hover {
+	background-color: #2e2315;
+}</string>
        </property>
        <property name="text">
         <string>Run Uber</string>
@@ -68,8 +91,13 @@ color: #efd6b9;
      </item>
      <item row="3" column="0">
       <widget class="QPushButton" name="GrubhubButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QPushButton:hover {
+	background-color: #2e2315;
+}</string>
        </property>
        <property name="text">
         <string>Run Grubhub</string>
@@ -78,8 +106,13 @@ color: #efd6b9;
      </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="RevelButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QPushButton:hover {
+	background-color: #2e2315;
+}</string>
        </property>
        <property name="text">
         <string>Run Revel</string>
@@ -88,8 +121,14 @@ color: #efd6b9;
      </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="RunAllButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QPushButton:hover {
+	background-color: #2e2315;
+	transition: background-color 0.9s ease-in-out;
+}</string>
        </property>
        <property name="text">
         <string>Run All</string>
@@ -190,7 +229,16 @@ color: #efd6b9;
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
