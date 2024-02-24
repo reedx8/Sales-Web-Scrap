@@ -23,14 +23,14 @@ options = ChromeOptions()
 ua = UserAgent() # user_agent doesnt avoid login security check, commented out for now
 user_agent = ua.random
 
-# Option attempts to avoid login security check (dont work):
+# Option attempts to avoid login security check (dont work for grubhub it seems):
 # options.add_argument(f'--user-agent={user_agent}')
-options.add_argument("--disable-blink-features")
-options.add_argument("--disable-blink-features=AutomationControlled")
+# options.add_argument("--disable-blink-features")
+# options.add_argument("--disable-blink-features=AutomationControlled")
 
 # The rest of the options:
 options.add_argument("window-size=1200x600")
-# options.add_argument("--headless=new") # headless browser mode (dont use until login sec check avoided)
+# options.add_argument("--headless=new") # TODO: doesnt work yet for grubhub
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-extensions")
 
@@ -103,25 +103,29 @@ def run_grubhub():
 
     # Step 1: Handle Login
     driver.get(login_url)
+    try:
+        username_field = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "gfr-login-authentication-username"))
+        )
+        password_field = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "gfr-login-authentication-password"))
+        )
 
-    # Fetch username and password elements
-    username_field = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "gfr-login-authentication-username"))
-    )
-    password_field = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "gfr-login-authentication-password"))
-    )
+        username_field.send_keys(username)
+        password_field.send_keys(password)
 
-    # Input login credentials
-    username_field.send_keys(username)
-    password_field.send_keys(password)
+        login_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//span[text()='Sign in']"))
+        )
+        login_button.click()
+    except Exception as e:
+        print("Couldnt log in")
+        print("Error message shown below:\n")
+        print(e)
+        driver.quit()
+        return 1
 
-    # Submit the login form
-    login_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//span[text()='Sign in']"))
-    )
-    login_button.click()
-
+    '''
     financials = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//span[text()='Financials']"))
     )
@@ -131,6 +135,7 @@ def run_grubhub():
         EC.presence_of_element_located((By.XPATH, "//span[text()='Transactions']"))
     )
     transactions.click()
+    '''
 
     '''
     # Step 2: Wait for the "Transactions" page to load directly
@@ -149,17 +154,30 @@ def run_grubhub():
     driver.switch_to.window(driver.window_handles[0])
     sleep(3)
 
+    # Get subtotals for only 4 stores:
     driver.get("https://restaurant.grubhub.com/financials/transactions/909517,909519,909523,909536")
+    sleep(5)
 
     # Step 3: Set date range to the current date
-    date_picker_input = driver.find_element(By.XPATH, "//input[@data-testid='export-modal-date-picker-input']")
+    try:
+        date_picker_input = driver.find_element(By.XPATH, "//input[@data-testid='export-modal-date-picker-input']")
 
-    # Get the current date and format it as MM/DD/YYYY
-    current_date = datetime.datetime.now().strftime("%m/%d/%Y")
+        # Get the current date and format it as MM/DD/YYYY
+        current_date = datetime.datetime.now().strftime("%m/%d/%Y")
 
-    date_picker_input.clear()
-    date_picker_input.send_keys(f"{current_date} - {current_date}")
-    sleep(3)
+        date_picker_input.clear()
+        date_picker_input.send_keys(f"{current_date} - {current_date}")
+        print(("Successfully logged in..."))
+    except Exception as e:
+        print("Blocked by Login Security check screen")
+        print("Error message shown below:\n")
+        print(e)
+        driver.quit()
+        return 2
+
+
+    # sleep(3)
+    sleep(2)
 
      # Step 5: Fetch subtotal data after clicking update button
     subtotals = fetch_subtotals(driver)

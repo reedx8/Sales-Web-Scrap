@@ -15,19 +15,13 @@ from fake_useragent import UserAgent
 
 load_dotenv()
 
-# if sys.argv[1] == 'x3':
-#     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-# else:
-#     driver = webdriver.Chrome()
-# driver.implicitly_wait(5) 
-# actions = ActionChains(driver)
 options = ChromeOptions()
 ua = UserAgent()
 user_agent = ua.random
 
-options.add_argument(f'--user-agent={user_agent}')
+# options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("window-size=1200x600") 
-options.add_argument("--headless=new") # headless browser mode
+# options.add_argument("--headless=new") # Cant do headless mode in uber (login's next button never found)
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-extensions")
 
@@ -57,6 +51,7 @@ all_sales = {
 def run_uber():
     print("\nRunning Uber Eats...")
 
+    # step 0: install OS specific chromedriver
     currentOS = platform.system().lower()
     if currentOS== "darwin": # mac os
         driver = webdriver.Chrome(options=options)
@@ -66,59 +61,97 @@ def run_uber():
         print("Linux OS detected. Program has not been tested on linux. Exiting program...")
         exit()
 
-    driver.implicitly_wait(5) 
+    driver.implicitly_wait(15) 
     actions = ActionChains(driver) 
 
 
-    # Step 1: Handle Login
+    # Step 1: Handle Google Login
     driver.get(login_url)
-    cont_with_google_btn = driver.find_element(By.XPATH, "//p[text()='Continue with Google']")
-    actions.move_to_element(cont_with_google_btn).click(cont_with_google_btn).perform()
+    try:
+        cont_with_google_btn = driver.find_element(By.XPATH, "//p[text()='Continue with Google']")
+        actions.move_to_element(cont_with_google_btn).click(cont_with_google_btn).perform()
 
-    popup = driver.window_handles[1]
-    driver.switch_to.window(popup)
+        popup = driver.window_handles[1]
+        driver.switch_to.window(popup)
 
-    username_field = driver.find_element(By.XPATH, "//input[@type='email']")
-    username_field.send_keys(username)
+        username_field = driver.find_element(By.XPATH, "//input[@type='email']")
+        username_field.send_keys(username)
 
-    next_btn = driver.find_element(By.XPATH, "//span[text()='Next']")
-    actions.move_to_element(next_btn).click(next_btn).perform()
+        next_btn = driver.find_element(By.XPATH, "//span[text()='Next']") # Fails here in headless mode
+        actions.move_to_element(next_btn).click(next_btn).perform()
 
-    sleep(3)
+        sleep(3)
 
-    pw_field = driver.find_element(By.XPATH, "//input[@type='password']")
-    pw_field.send_keys(password)
+        pw_field = driver.find_element(By.XPATH, "//input[@type='password']")
+        pw_field.send_keys(password)
 
-    next_btn = driver.find_element(By.XPATH, "//span[text()='Next']") # otherwise stale element....
-    actions.move_to_element(next_btn).click(next_btn).perform()
+        next_btn = driver.find_element(By.XPATH, "//span[text()='Next']") # otherwise stale element....
+        actions.move_to_element(next_btn).click(next_btn).perform()
+    except Exception as e:
+        print("Couldn't log in")
+        print("Error message shown below:\n")
+        print(e)
+        driver.quit()
+        return 1
+
+    # Handles sign in to uber confirm screen possibility:
+    try:
+        sign_in_confirm = driver.find_element(By.XPATH, "//span[text()='Continue']")
+        actions.move_to_element(sign_in_confirm).click(sign_in_confirm).perform()
+    except:
+        print("Sign in confirm screen did not show")
+
+    # sleep(10)
 
 
-    sleep(10)
+    driver.switch_to.window(driver.window_handles[0])
+    # sleep(5)
+
+    #TODO: Handle all set screen possibility (automatically continues on own)
+    '''
+    try:
+        all_set_confirm = driver.find_element(By.XPATH, "//span[text()='Continue']")
+        actions.move_to_element(all_set_confirm).click(all_set_confirm).perform()
+    except:
+        print("All Set screen did not show")
+    '''
 
 
     # Step 2: Grab live sales from each store
-    driver.switch_to.window(driver.window_handles[0])
-    sleep(5) # needed, else stale element error on menu_btn
+    # sleep(5) # needed, else stale element error on menu_btn
+    sleep(10) # needed, else stale element error on menu_btn
     for store in all_stores:
-        menu_btn = driver.find_element(By.XPATH, "//*[@id='wrapper']/div[1]/div[2]/div[2]/div[1]/div/div[1]/button")
-        actions.move_to_element(menu_btn).click(menu_btn).perform()
-        sleep(5) #Needed. sleep(3) seconds wasnt always long enough wait for menu+element to load
-        store_link = driver.find_element(By.XPATH, f"//p[text()='{store}']")
-        sleep(1)
-        actions.move_to_element(store_link).click(store_link).perform()
-        sleep(10)
+        try:
+            menu_btn = driver.find_element(By.XPATH, "//*[@id='wrapper']/div[1]/div[2]/div[2]/div[1]/div/div[1]/button")
+            actions.move_to_element(menu_btn).click(menu_btn).perform()
+        except:
+            print("Menu button not found")
+        # sleep(5) #Needed. sleep(3) seconds wasnt always long enough wait for menu+element to load
+        # sleep(4)
+        try:
+            store_link = driver.find_element(By.XPATH, f"//p[text()='{store}']")
+            sleep(1)
+            actions.move_to_element(store_link).click(store_link).perform()
+        except:
+            print("Store link in menu not found")
+        # sleep(10) # must wait
+        sleep(8)
 
-        sales = driver.find_element(By.XPATH, "//h5[@data-baseweb='typo-headingsmall']").text
+        try:
+            sales = driver.find_element(By.XPATH, "//h5[@data-baseweb='typo-headingsmall']").text
+        except:
+            print("Cant find sales yet")
+
         print(store, ": ", sales)
 
         if (store == hall):
-            all_sales["Hall"] = sales
+            all_sales["Hall"] = sales[1:]
         elif (store == barrows):
-            all_sales["Barrows"] = sales
+            all_sales["Barrows"] = sales[1:]
         elif (store == kruse):
-            all_sales["Kruse"] = sales
+            all_sales["Kruse"] = sales[1:]
         elif (store == orenco):
-            all_sales["Orenco"] = sales
+            all_sales["Orenco"] = sales[1:]
         
     # Step 3: Send live sales data to spreadsheet
     send_data(all_sales, "uber")

@@ -27,11 +27,9 @@ options = ChromeOptions()
 ua = UserAgent()
 user_agent = ua.random
 
-options.add_argument(f'--user-agent={user_agent}')
+options.add_argument(f'--user-agent={user_agent}') # Needed for headless mode to work in DD
 options.add_argument("window-size=1200x600")
 options.add_argument("--headless=new") # headless browser mode
-options.add_argument("--disable-gpu")
-options.add_argument("--disable-extensions")
 
 username = os.getenv('DD_USERNAME')
 password = os.getenv('DD_PW')
@@ -89,7 +87,7 @@ def run_doordash():
                 # print('ERROR: Username, password, or login button wasnt yet loaded in the HTML DOM. Try waiting longer.')
                 print("ERROR: Handle log in error.")
                 driver.quit()
-                exit()
+                return 1
             else:
                 print("Login attempt made...")
                 sleep(5)
@@ -97,20 +95,22 @@ def run_doordash():
 
     # Wait for the page to load after login, initial login can take awhile (adjust the wait time as needed)
     # sleep(2) # simply pauses execution for x seconds
+    sleep(3) # waits to see if 2 step verification popup shows
 
-    # Attempts to wait for page to load for a max of 35 seconds (+5 seconds from implicitly_wait()):
+    # Attempts to wait for 2 step verifcation success for a max of 50 seconds (+5 seconds from implicitly_wait()):
     for attempts in range(4):
         try:
             merchant_app = driver.find_element(By.ID, "MerchantApp").is_displayed()
         except Exception as error:
             if (attempts >= 3):
-                print("ERROR: Check network connection and try again.")
+                print("2 step verification blocked, or network error")
                 driver.quit()
-                exit()
+                return 2
             else:
-                print("Waiting for page to load...")
-                sleep(10)
+                print("2-Step verification screen shown. App waiting to continue...")
+                sleep(15)
 
+    print("Successfully logged in...")
     # Step 2 -- Click on general menu button at top left after log in
     store_btn = driver.find_element(By.XPATH, "//span[text()='Ava Roasteria']")
     sleep(2) # required sometimes, or else click below just wont happen (not clickable yet)

@@ -30,7 +30,7 @@ user_agent = ua.random
 
 options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("window-size=1200x600")
-# options.add_argument("--headless=new") # headless browser mode
+options.add_argument("--headless=new") # headless browser mode
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-extensions")
 # options.add_arguments("window-size=1200x600", "--headless=new", "--disable-gpu", "--disable-extensions")
@@ -57,7 +57,7 @@ orenco_menu_xpath = "//*[@id='establishments-tree']/div/div[3]/ul/li[1]/ul/li[3]
 barrows_menu_xpath = "//*[@id='establishments-tree']/div/div[3]/ul/li[1]/ul/li[4]/span[2]/span[3]"
 
 def run_revel():
-    # print("\nRunning Revel...")
+    print("\nRunning Revel...")
 
     driver = webdriver.Chrome(options=options) # Pass nothing to Chrome() if you want to see code working
     # driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
@@ -89,7 +89,7 @@ def run_revel():
                 # print('ERROR: Username, password, or login button wasnt yet loaded in the HTML DOM. Try waiting longer.')
                 print(error)
                 driver.quit()
-                exit()
+                return 1
             else:
                 print("Login attempt made...")
                 sleep(2)
@@ -105,6 +105,8 @@ def run_revel():
     shadow_root_script = "return document.querySelector('body > div.mf-header-wrapper > management-console-header').shadowRoot"
     shadow_root = driver.execute_script(shadow_root_script)
     establishment_link = shadow_root.find_element(By.CLASS_NAME, establ_classname)
+    
+    print("Succesfully logged in...")
 
     # Step 3 -- Make 3 total attempts to get beaverton's net sales:
     for attempts in range(4):

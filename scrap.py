@@ -11,6 +11,13 @@ from selenium.webdriver import Chrome, ChromeOptions
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi("Program.ui")
 
+
+class Settings:
+    isHeadlessEnabled = False
+    # other settings to add...
+
+settings = Settings()
+
 dlg.statusbar.showMessage("Ready...", 10000)
 dlg.OutputConsole.addItem("Welcome to the Live Sales App")
 dlg.OutputConsole.addItem("Press any button below to begin")
@@ -37,21 +44,21 @@ def output_to_app(platformName, sales):
         dlg.OutputConsole.addItem(outputString)
 
 def exec_all():
-    # exec_revel()
-    revelSales = run_revel()
-    output_to_app("revel", revelSales)
+    exec_revel()
+    # revelSales = run_revel()
+    # output_to_app("revel", revelSales)
 
-    # exec_doordash()
-    doordashSales = run_doordash()
-    output_to_app("doordash", doordashSales)
+    exec_doordash()
+    # doordashSales = run_doordash()
+    # output_to_app("doordash", doordashSales)
     
-    # exec_uber()
-    uberSales = run_uber()
-    output_to_app("uber", uberSales)
+    exec_uber()
+    # uberSales = run_uber()
+    # output_to_app("uber", uberSales)
 
-    # exec_grubhub()
-    grubhubSales = run_grubhub()
-    output_to_app("grubhub", grubhubSales)
+    exec_grubhub()
+    # grubhubSales = run_grubhub()
+    # output_to_app("grubhub", grubhubSales)
 
     # dlg.OutputConsole.clear()
 
@@ -63,22 +70,38 @@ def exec_revel():
     # dlg.OutputConsole.addItem("Scraping Revel...")
     revelSales = run_revel()
     dlg.OutputConsole.clear()
-    output_to_app("revel", revelSales)
+    if revelSales == 1:
+        dlg.OutputConsole.addItem("Revel: Login failed")
+    else:
+        output_to_app("revel", revelSales)
 
 def exec_doordash():
     doordashSales = run_doordash()
     dlg.OutputConsole.clear()
-    output_to_app("doordash", doordashSales)
+    if doordashSales == 1:
+        dlg.OutputConsole.addItem("Doordash: Login failed")
+    elif doordashSales == 2:
+        dlg.OutputConsole.addItem("Doordash: Blocked by 2-step verification")
+    else:
+        output_to_app("doordash", doordashSales)
 
 def exec_uber():
     uberSales = run_uber()
     dlg.OutputConsole.clear()
-    output_to_app("uber", uberSales)
+    if uberSales == 1:
+        dlg.OutputConsole.addItem("Uber: Login failed")
+    else:
+        output_to_app("uber", uberSales)
 
 def exec_grubhub():
     grubhubSales = run_grubhub()
     dlg.OutputConsole.clear()
-    output_to_app("grubhub", grubhubSales)
+    if grubhubSales == 1:
+        dlg.OutputConsole.addItem("Grubhub: Login failed")
+    elif grubhubSales == 2:
+        dlg.OutputConsole.addItem("Grubhub: Blocked by login security check")
+    else:
+        output_to_app("grubhub", grubhubSales)
 
 def webscrap_all_thread():
     dlg.OutputConsole.clear()
@@ -123,6 +146,8 @@ def open_github():
     driver.get("https://github.com/reedx8/Sales-Web-Scrap")
     # driver.quit()
 
+def updateHeadlessBtn():
+    settings.isHeadlessEnabled = dlg.HeadlessRadioBtn.isChecked()
 
 dlg.RunAllButton.clicked.connect(webscrap_all_thread)
 dlg.RevelButton.clicked.connect(webscrap_revel_thread)
@@ -130,6 +155,10 @@ dlg.DoordashButton.clicked.connect(webscrap_doordash_thread)
 dlg.UberButton.clicked.connect(webscrap_uber_thread)
 dlg.GrubhubButton.clicked.connect(webscrap_grubhub_thread)
 dlg.GithubButton.clicked.connect(open_github)
+dlg.HeadlessRadioBtn.clicked.connect(updateHeadlessBtn)
+
+
+
 
 
 dlg.show()
