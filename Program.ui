@@ -306,9 +306,6 @@ QRadioButton, QLineEdit {
      <property name="font">
       <font>
        <pointsize>-1</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
-       <underline>false</underline>
       </font>
      </property>
      <property name="text">

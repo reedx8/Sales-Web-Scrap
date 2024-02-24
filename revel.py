@@ -105,8 +105,8 @@ def run_revel():
     shadow_root_script = "return document.querySelector('body > div.mf-header-wrapper > management-console-header').shadowRoot"
     shadow_root = driver.execute_script(shadow_root_script)
     establishment_link = shadow_root.find_element(By.CLASS_NAME, establ_classname)
-    
-    print("Succesfully logged in...")
+
+    print("Successfully logged in...")
 
     # Step 3 -- Make 3 total attempts to get beaverton's net sales:
     for attempts in range(4):
