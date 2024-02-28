@@ -79,9 +79,9 @@ def exec_doordash():
     doordashSales = run_doordash()
     dlg.OutputConsole.clear()
     if doordashSales == 1:
-        dlg.OutputConsole.addItem("Doordash: Login failed")
+        dlg.OutputConsole.addItem("Doordash: Login failed (likely blocked by 2SV)")
     elif doordashSales == 2:
-        dlg.OutputConsole.addItem("Doordash: Blocked by 2-step verification")
+        dlg.OutputConsole.addItem("Doordash: Blocked by 2SV")
     else:
         output_to_app("doordash", doordashSales)
 

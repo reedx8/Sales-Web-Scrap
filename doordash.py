@@ -24,12 +24,12 @@ load_dotenv()
 # actions = ActionChains(driver)
 
 options = ChromeOptions()
-ua = UserAgent()
-user_agent = ua.random
+# ua = UserAgent()
+# user_agent = ua.random
 
-options.add_argument(f'--user-agent={user_agent}') # Needed for headless mode to work in DD
+# options.add_argument(f'--user-agent={user_agent}') # Needed for headless mode to work in DD
 options.add_argument("window-size=1200x600")
-options.add_argument("--headless=new") # headless browser mode
+# options.add_argument("--headless=new") # headless browser mode (Random 2SV popup renders headless mode in DD inconsistent)
 
 username = os.getenv('DD_USERNAME')
 password = os.getenv('DD_PW')
@@ -84,12 +84,11 @@ def run_doordash():
             break #neccessary for some reason, otherwise it will both login + cauase an exception on 3rd attempt (attempts = 2)
         except Exception as error:
             if (attempts >= 3):
-                # print('ERROR: Username, password, or login button wasnt yet loaded in the HTML DOM. Try waiting longer.')
-                print("ERROR: Handle log in error.")
+                print("Doordash: Couldnt login, likely due to 2SV popup")
                 driver.quit()
                 return 1
             else:
-                print("Login attempt made...")
+                print("Doordash: Login attempt made...")
                 sleep(5)
 
 
@@ -103,11 +102,11 @@ def run_doordash():
             merchant_app = driver.find_element(By.ID, "MerchantApp").is_displayed()
         except Exception as error:
             if (attempts >= 3):
-                print("2 step verification blocked, or network error")
+                print("Doordash: 2 step verification blocked, or network error")
                 driver.quit()
                 return 2
             else:
-                print("2-Step verification screen shown. App waiting to continue...")
+                print("Doordash: 2-Step verification screen shown. You must pass 2SV check before app can continue.")
                 sleep(15)
 
     print("Successfully logged in...")
