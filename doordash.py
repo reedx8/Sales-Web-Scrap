@@ -28,7 +28,7 @@ options = ChromeOptions()
 # user_agent = ua.random
 
 # options.add_argument(f'--user-agent={user_agent}') # Needed for headless mode to work in DD
-options.add_argument("window-size=1200x600")
+options.add_argument("--window-size=1200,600")
 # options.add_argument("--headless=new") # headless browser mode (Random 2SV popup renders headless mode in DD inconsistent)
 
 username = os.getenv('DD_USERNAME')

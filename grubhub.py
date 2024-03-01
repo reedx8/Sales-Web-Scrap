@@ -29,7 +29,7 @@ user_agent = ua.random
 # options.add_argument("--disable-blink-features=AutomationControlled")
 
 # The rest of the options:
-options.add_argument("window-size=1200x600")
+options.add_argument("--window-size=1200,600")
 # options.add_argument("--headless=new") # TODO: doesnt work yet for grubhub
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-extensions")

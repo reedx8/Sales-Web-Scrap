@@ -17,9 +17,11 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
     - pip: Comes packaged with python when downloaded from python.org
 3. Open terminal/command prompt to run the following commands in a virtual environment:
 
-    1. Virtual Environment how-to: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments
+    1. Virtual Environment how-to:
+        - Mac: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments
+        - Windows: https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv-win.html
         - Note: The `.venv` folder is already included in the `.gitignore` file
-    2. Run the following command to install all required packages: `pip3 install -r requirements.txt`
+    2. Run the following command to install all required packages: `pip3 install -r req.txt`
         - _Note_: Use `pip3` or `pip` depending on your setup
         - Requirements outlined (Fallback only. Ignore if install command above worked):
             - PyQt5: `pip3 install PyQt5`
@@ -30,6 +32,7 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
             - pandas: `pip3 install pandas`
             - webdriver-manager: `pip3 install webdriver-manager` (_needed for windows users_)
             - fake-useragent: `pip3 install fake-useragent`
+            - google-api-python-client: `pip3 install google-api-python-client`
             - See "Installation Docs" section for more info
 
 4. Add the following files to project folder (message repo owner):
