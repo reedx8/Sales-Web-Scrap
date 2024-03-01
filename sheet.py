@@ -7,7 +7,8 @@ paths = [
     '/Users/xvrmac/code/Sales-Web-Scrap/google_api_cred.json',
     '/Users/xreed/code/Sales-Web-Scrap/google_api_cred.json',
     'C:\\Users\\reedx\\Code\\Sales-Web-Scrap\\google_api_cred.json',
-    "D:\\Ava\\Sales-Web-Scrap\\google_api_cred.json"
+    "D:\\Ava\\Sales-Web-Scrap\\google_api_cred.json",
+    "C:\\Users\\reedx\\Desktop\\code\\Sales-Web-Scrap\\google_api_cred.json"
 ]
 pathFound = False
 
