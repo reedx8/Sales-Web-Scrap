@@ -118,7 +118,7 @@ def run_revel():
             # driver.quit()
             # exit()
         elif (net_sales == "----"):
-            sleep(3) # net sales not loaded yet, wait x seconds
+            sleep(5) # net sales not loaded yet, wait x seconds
         else:
             break # got net sales figure
     # print("Hall: $", net_sales)

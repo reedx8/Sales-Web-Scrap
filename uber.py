@@ -1,3 +1,7 @@
+'''
+TODO:
+1. Ensure first sales value is hall, not total for business
+'''
 import os
 import sys
 from selenium import webdriver
