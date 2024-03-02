@@ -100,6 +100,10 @@ def exec_grubhub():
         dlg.OutputConsole.addItem("Grubhub: Login failed")
     elif grubhubSales == 2:
         dlg.OutputConsole.addItem("Grubhub: Blocked by login security check")
+        dlg.OutputConsole.addItem("Tip - Mimic human input to get around check:")
+        dlg.OutputConsole.addItem("Click on input fields, check remember me, and")
+        dlg.OutputConsole.addItem("manually click sign in button to avoid. Press and hold button.")
+        dlg.OutputConsole.addItem("(May need to do the above twice)")
     else:
         output_to_app("grubhub", grubhubSales)
 

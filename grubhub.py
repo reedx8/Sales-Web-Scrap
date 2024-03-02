@@ -24,9 +24,9 @@ ua = UserAgent() # user_agent doesnt avoid login security check, commented out f
 user_agent = ua.random
 
 # Option attempts to avoid login security check (dont work for grubhub it seems):
-# options.add_argument(f'--user-agent={user_agent}')
-# options.add_argument("--disable-blink-features")
-# options.add_argument("--disable-blink-features=AutomationControlled")
+options.add_argument(f'--user-agent={user_agent}')
+options.add_argument("--disable-blink-features")
+options.add_argument("--disable-blink-features=AutomationControlled")
 
 # The rest of the options:
 options.add_argument("--window-size=1200,600")
@@ -98,7 +98,7 @@ def run_grubhub():
         print("Linux OS detected. Program has not been tested on linux. Exiting program...")
         exit()
 
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(5)
     actions = ActionChains(driver)
 
     # Step 1: Handle Login
@@ -111,19 +111,40 @@ def run_grubhub():
             EC.presence_of_element_located((By.ID, "gfr-login-authentication-password"))
         )
 
+        sleep(3)
         username_field.send_keys(username)
+        sleep(3)
         password_field.send_keys(password)
+        sleep(5)
 
+        
+        '''
         login_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, "//span[text()='Sign in']"))
         )
+        sleep(3)
         login_button.click()
+        '''
+
+        # login_button = driver.find_element(By.XPATH, "//span[text()='Sign in']")
+        # actions.move_to_element(login_button).click(login_button).perform()
+        # driver.send_keys
     except Exception as e:
-        print("Couldnt log in")
+        print("\nCouldnt log in")
         print("Error message shown below:\n")
         print(e)
         driver.quit()
         return 1
+
+    try:
+        login_button = WebDriverWait(driver, 1).until(
+            EC.element_to_be_clickable((By.XPATH, "//span[text()='Sign in']"))
+        )
+        login_button.click()
+    except:
+        print("Sign in button clicked, or couldnt log in. Continuing anyways...")
+
+
 
     '''
     financials = WebDriverWait(driver, 10).until(
@@ -152,11 +173,28 @@ def run_grubhub():
     '''
 
     driver.switch_to.window(driver.window_handles[0])
-    sleep(3)
+    sleep(2)
+    # sleep(120)
+    max_attempts = 1 
+    for attempt in range(0,max_attempts+1):
+        try:
+            dashboard = driver.find_element(By.XPATH, "//h2[text()='Dashboard']")
+            print("Successfully logged in...")
+            break
+        except Exception as e:
+            if attempt >= max_attempts:
+                print("\nGrubhub: Blocked by Login Security check")
+                driver.quit()
+                return 2
+            else:
+                # No use waiting for user, user can never pass this security check
+                print(f"Grubhub: Waiting for user to pass login security check... (Attempt: {attempt+1}/{max_attempts})")
+                sleep(2)
+    
 
     # Get subtotals for only 4 stores:
     driver.get("https://restaurant.grubhub.com/financials/transactions/909517,909519,909523,909536")
-    sleep(5)
+    sleep(1)
 
     # Step 3: Set date range to the current date
     try:
@@ -167,7 +205,7 @@ def run_grubhub():
 
         date_picker_input.clear()
         date_picker_input.send_keys(f"{current_date} - {current_date}")
-        print(("Successfully logged in..."))
+        # print(("Successfully logged in..."))
     except Exception as e:
         print("Blocked by Login Security check screen")
         print("Error message shown below:\n")

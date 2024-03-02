@@ -44,12 +44,15 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
     - Use `python3`, `python`, or `py` depending on your installation setup of python
     - Refrain from closing terminal or resizing browser window while program is running.
 
-_Note_: Do the following to get around Grubhub's login security check:
+<br/>
 
-    1. Clear all history in the browser the script is running
-    2. Close the Live Sales app
-    3. Sign out of Grubhub anywhere else
-    4. Now rerun the app (keep retrying)
+**Note: Mimic human input to avoid Grubhub's login security check:**
+
+    1. Click on input fields,
+    2. Check "Remember me" box, and
+    3. Manually click sign in button to avoid.
+
+    Use the "press and hold" button" (it will always error). May need to do the above twice.
 
 ## Installation Docs
 
