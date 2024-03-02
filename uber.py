@@ -119,7 +119,7 @@ def run_uber():
 
     # Step 2: Grab live sales from each store
     # sleep(5) # needed, else stale element error on menu_btn
-    sleep(10) # needed, else stale element error on menu_btn
+    sleep(15) # needed, else stale element error on menu_btn, or it will grab total business sales for hall
     for store in all_stores:
         try:
             menu_btn = driver.find_element(By.XPATH, "//*[@id='wrapper']/div[1]/div[2]/div[2]/div[1]/div/div[1]/button")
