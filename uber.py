@@ -17,8 +17,21 @@ from selenium.webdriver.chrome.service import Service
 import platform
 # from fake_useragent import UserAgent
 
-env_path = os.path.join('assets', '.env')
+def resource_path(relative_path):
+    """Get the absolute path to the resource, works for development and for PyInstaller"""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+env_path = resource_path(os.path.join('assets', '.env'))
 load_dotenv(env_path)
+
+# env_path = os.path.join('assets', '.env')
+# load_dotenv(env_path)
 # load_dotenv()
 
 options = ChromeOptions()
