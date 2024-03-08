@@ -10,3 +10,8 @@ Thumbs.db
 *.zip
 google_api_cred.json
 __pycache__/
+*.spec
+*.icns
+build/
+dist/
+resources/

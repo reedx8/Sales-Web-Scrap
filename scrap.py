@@ -1,4 +1,6 @@
 # Call all platforms from this main file
+import os
+import sys
 from PyQt5 import QtWidgets, uic 
 from revel import run_revel
 from doordash import run_doordash
@@ -8,8 +10,19 @@ from threading import Thread
 from selenium import webdriver
 from selenium.webdriver import Chrome, ChromeOptions
 
+def resource_path(relative_path):
+    """ Get the absolute path to the resource, works for development and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
 app = QtWidgets.QApplication([])
-dlg = uic.loadUi("Program.ui")
+dlg = uic.loadUi(resource_path("assets/Program.ui"))
 
 
 class Settings:

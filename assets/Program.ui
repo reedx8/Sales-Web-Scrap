@@ -193,7 +193,7 @@ QPushButton:hover {
      <enum>Qt::AutoText</enum>
     </property>
     <property name="pixmap">
-     <pixmap>assets/header.png</pixmap>
+     <pixmap>header.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -231,7 +231,7 @@ QPushButton:hover {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>assets/gh.png</normaloff>assets/gh.png</iconset>
+      <normaloff>gh.png</normaloff>gh.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -253,7 +253,7 @@ QPushButton:hover {
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>assets/green.png</pixmap>
+     <pixmap>green.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>

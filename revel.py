@@ -30,7 +30,7 @@ user_agent = ua.random
 
 options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("--window-size=1200,600")
-options.add_argument("--headless=new") # headless browser mode
+# options.add_argument("--headless=new") # headless browser mode
 options.add_argument("--disable-gpu")
 options.add_argument("--disable-extensions")
 # options.add_arguments("window-size=1200x600", "--headless=new", "--disable-gpu", "--disable-extensions")
