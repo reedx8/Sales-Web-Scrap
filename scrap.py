@@ -22,7 +22,7 @@ def resource_path(relative_path):
 
 
 app = QtWidgets.QApplication([])
-dlg = uic.loadUi(resource_path("assets/Program.ui"))
+dlg = uic.loadUi(resource_path(os.path.join("assets", "Program.ui")))
 
 
 class Settings:

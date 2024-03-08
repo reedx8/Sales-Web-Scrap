@@ -21,7 +21,8 @@ from sheet import send_data
 from threading import Thread
 # from fake_useragent import UserAgent
 
-load_dotenv()
+env_path = os.path.join('assets', '.env')
+load_dotenv(env_path)
 
 # removes 1 less variable by ensuring window size is always the same
 options = ChromeOptions()

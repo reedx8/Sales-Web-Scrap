@@ -17,7 +17,9 @@ from sheet import send_data
 from dotenv import load_dotenv
 # from fake_useragent import UserAgent
 
-load_dotenv()
+env_path = os.path.join('assets', '.env')
+load_dotenv(env_path)
+# load_dotenv()
 
 # driver = webdriver.Chrome()
 # driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already

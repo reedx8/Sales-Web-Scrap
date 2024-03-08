@@ -35,12 +35,13 @@ Spreadsheet: https://docs.google.com/spreadsheets/d/1deyIpmet1Fa9bRqAI9IbRpMC60Z
             - google-api-python-client: `pip3 install google-api-python-client`
             - See "Installation Docs" section for more info
 
-4. Add the following files to project folder (message repo owner):
+4. Add the following files to the "assets" folder (message repo owner):
+
     - `.env` file
         - **Windows users only**: Create a new Notepad file, add credentials to file, _file -> save_, save as type: All Files, and name it _'.env'_ (no quotes).
     - `google_api_cred.json` file
-5. Edit `sheet.py` with your own path to `google_api_cred.json`
-6. Finally, run program with: `python3 scrap.py`
+
+5. Finally, run program with: `python3 scrap.py`
     - Use `python3`, `python`, or `py` depending on your installation setup of python
     - Refrain from closing terminal or resizing browser window while program is running.
 

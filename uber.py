@@ -17,7 +17,9 @@ from selenium.webdriver.chrome.service import Service
 import platform
 # from fake_useragent import UserAgent
 
-load_dotenv()
+env_path = os.path.join('assets', '.env')
+load_dotenv(env_path)
+# load_dotenv()
 
 options = ChromeOptions()
 # ua = UserAgent()
