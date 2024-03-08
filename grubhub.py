@@ -20,11 +20,11 @@ from fake_useragent import UserAgent
 load_dotenv()
 
 options = ChromeOptions()
-ua = UserAgent() # user_agent doesnt avoid login security check, commented out for now
-user_agent = ua.random
+# ua = UserAgent() # user_agent doesnt avoid login security check, commented out for now
+# user_agent = ua.random
 
 # Option attempts to avoid login security check (dont work for grubhub it seems):
-options.add_argument(f'--user-agent={user_agent}')
+# options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("--disable-blink-features")
 options.add_argument("--disable-blink-features=AutomationControlled")
 

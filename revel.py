@@ -19,16 +19,16 @@ from selenium.webdriver.common.action_chains import ActionChains
 from dotenv import load_dotenv
 from sheet import send_data
 from threading import Thread
-from fake_useragent import UserAgent
+# from fake_useragent import UserAgent
 
 load_dotenv()
 
 # removes 1 less variable by ensuring window size is always the same
 options = ChromeOptions()
-ua = UserAgent()
-user_agent = ua.random
+# ua = UserAgent()
+# user_agent = ua.random
 
-options.add_argument(f'--user-agent={user_agent}')
+# options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("--window-size=1200,600")
 # options.add_argument("--headless=new") # headless browser mode
 options.add_argument("--disable-gpu")

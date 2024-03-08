@@ -15,13 +15,13 @@ from dotenv import load_dotenv
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import platform
-from fake_useragent import UserAgent
+# from fake_useragent import UserAgent
 
 load_dotenv()
 
 options = ChromeOptions()
-ua = UserAgent()
-user_agent = ua.random
+# ua = UserAgent()
+# user_agent = ua.random
 
 # options.add_argument(f'--user-agent={user_agent}')
 options.add_argument("--window-size=1200,600")

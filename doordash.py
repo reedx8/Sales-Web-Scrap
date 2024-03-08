@@ -15,7 +15,7 @@ from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from sheet import send_data
 from dotenv import load_dotenv
-from fake_useragent import UserAgent
+# from fake_useragent import UserAgent
 
 load_dotenv()
 
