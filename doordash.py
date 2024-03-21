@@ -35,10 +35,6 @@ load_dotenv(env_path)
 # load_dotenv(env_path)
 # load_dotenv()
 
-# driver = webdriver.Chrome()
-# driver.implicitly_wait(5) # Global setting that sets driver to wait a max of x seconds to find each requested element in DOM tree if they are not immediately available in DOM already
-# actions = ActionChains(driver)
-
 options = ChromeOptions()
 # ua = UserAgent()
 # user_agent = ua.random
@@ -86,12 +82,17 @@ def run_doordash():
     for attempts in range(4):
         try:
             username_field = driver.find_element(By.XPATH, "//*[@id='FieldWrapper-0']")
-            password_field = driver.find_element(By.XPATH, "//*[@id='FieldWrapper-1']")
             
-            # if checks handle case where username and/or password entered in twice due
+            # "if" conditionals handle case where username and/or password entered in twice due
             # to only login_button throwing an exception, therefor failing to login:
             if (username_field.get_attribute('value') != username): # accesses the value attributes text on the element
                 username_field.send_keys(username)
+            
+            continue_with_login = driver.find_element(By.ID, 'merchant-login-submit-button')
+            actions.move_to_element(continue_with_login).click(continue_with_login).perform()
+
+            password_field = driver.find_element(By.XPATH, "//*[@id='FieldWrapper-2']")
+
             if (password_field.get_attribute('value') != password):
                 password_field.send_keys(password)
 
@@ -105,6 +106,7 @@ def run_doordash():
                 return 1
             else:
                 print("Doordash: Login attempt made...")
+                print(error)
                 sleep(5)
 
 
@@ -127,16 +129,50 @@ def run_doordash():
 
     print("Successfully logged in...")
     # Step 2 -- Click on general menu button at top left after log in
-    store_btn = driver.find_element(By.XPATH, "//span[text()='Ava Roasteria']")
-    sleep(2) # required sometimes, or else click below just wont happen (not clickable yet)
-    actions.move_to_element(store_btn).click(store_btn).perform()
-    sleep(1) # required sometimes
+    for attempts in range(4):
+        try:
+            store_btn = driver.find_element(By.XPATH, "//span[text()='Ava Roasteria']")
+            sleep(2) # required sometimes, or else click below just wont happen (not clickable yet)
+            actions.move_to_element(store_btn).click(store_btn).perform()
+            sleep(1) # required sometimes
+            break
+        except Exception as error:
+            if attempts >= 3:
+                print("ERROR: Couldn't find or interact with store button")
+                driver.quit()
+                return 3
+            else:
+                try:
+                    menu_btn = driver.find_element(By.XPATH, "//button[@aria-label='Show Side Menu']")
+                    actions.move_to_element(menu_btn).click(menu_btn).perform()
+                except Exception as error:
+                    print("ERROR: Couldn't find or interact with menu button")
+                    driver.quit()
+                    return 3
+
 
     # Step 3 -- Grab sales for all stores
     for store_name in all_stores:
         # Go to the individual store's doordash homepage:
-        link = driver.find_element(By.XPATH, f"//div[text()='{store_name}']")
-        actions.move_to_element(link).click(link).perform()
+        for attempts in range(4):
+            try:
+                link = driver.find_element(By.XPATH, f"//div[text()='{store_name}']")
+                actions.move_to_element(link).click(link).perform()
+                break
+            except Exception as error:
+                if attempts >= 3:
+                    print("ERROR: Couldnt find or interact with store link")
+                    driver.quit()
+                    return 3
+                else:
+                    try:
+                        menu_btn = driver.find_element(By.XPATH, "//button[@aria-label='Show Side Menu']")
+                        actions.move_to_element(menu_btn).click(menu_btn).perform()
+                    except Exception as error:
+                        print("ERROR: Couldn't find or interact with menu button")
+                        driver.quit()
+                        return 3
+
         # driver.get(store) # this caused a cloudflare "prove that youre a human" page
         sleep(5) # necessary or else sales may be grabbed before next store's sales is ready, causing identical sales across stores
 
@@ -149,7 +185,7 @@ def run_doordash():
                 if attempts >= 3:
                     print("ERROR: Couldnt find sales (class = bzJrJX)")
                     driver.quit()
-                    exit()
+                    return 3
                 else:
                     sleep(3)
         
