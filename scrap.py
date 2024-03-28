@@ -92,11 +92,11 @@ def exec_doordash():
     doordashSales = run_doordash()
     dlg.OutputConsole.clear()
     if doordashSales == 1:
-        dlg.OutputConsole.addItem("Doordash: Login failed (likely blocked by 2SV)")
+        dlg.OutputConsole.addItem("Doordash: Login failed")
     elif doordashSales == 2:
         dlg.OutputConsole.addItem("Doordash: Blocked by 2SV")
     elif doordashSales == 3:
-        dlg.OutputConsole.addItem("Doordash: Couldn't find an element on page")
+        dlg.OutputConsole.addItem("Doordash: Couldn't find an element on page or network error")
     else:
         output_to_app("doordash", doordashSales)
 
