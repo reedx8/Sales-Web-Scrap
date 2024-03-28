@@ -238,14 +238,14 @@ def run_doordash():
         for attempts in range(4):
             try:
                 sales_text = driver.find_element(By.XPATH, "//span[text()='Sales']");
-                sales = sales_text.find_element(By.XPATH, "./following-sibling::span")
+                sales = sales_text.find_element(By.XPATH, "./following-sibling::span");
 
                 # sales = driver.find_element(By.CLASS_NAME, "bfgrtD") # 3 class duplicates on page, its taking first class
                 # sales = driver.find_element(By.CLASS_NAME, "bzJrJX") # 3 class duplicates on page, its taking first class
                 # sales = driver.find_element(By.XPATH, "//*[@id='MerchantApp']/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div/div/div[2]/div/div[1]/div/div/div[1]/div/span[2]")
             except Exception as error:
                 if attempts >= 3:
-                    print("ERROR: Couldnt find sales (class = bfgrtD)")
+                    print("ERROR: Couldnt find sales (class = sibling to 'Sales' text)");
                     driver.quit()
                     return 3
                 else:
