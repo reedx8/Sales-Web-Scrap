@@ -237,7 +237,10 @@ def run_doordash():
         # Get the individual store's sales from its homepage:
         for attempts in range(4):
             try:
-                sales = driver.find_element(By.CLASS_NAME, "bfgrtD") # 3 class duplicates on page, its taking first class
+                sales_text = driver.find_element(By.XPATH, "//span[text()='Sales']");
+                sales = sales_text.find_element(By.XPATH, "./following-sibling::span")
+
+                # sales = driver.find_element(By.CLASS_NAME, "bfgrtD") # 3 class duplicates on page, its taking first class
                 # sales = driver.find_element(By.CLASS_NAME, "bzJrJX") # 3 class duplicates on page, its taking first class
                 # sales = driver.find_element(By.XPATH, "//*[@id='MerchantApp']/div/div/div/div[1]/div/div[2]/div[2]/div/div/div/div/div/div[2]/div/div[1]/div/div/div[1]/div/span[2]")
             except Exception as error:
