@@ -1,4 +1,3 @@
-# Call all platforms from this main file
 import os
 import sys
 from PyQt5 import QtWidgets, uic 
@@ -6,9 +5,6 @@ from revel import run_revel
 from doordash import run_doordash
 from uber import run_uber
 from grubhub import run_grubhub
-from threading import Thread
-from selenium import webdriver
-from selenium.webdriver import Chrome, ChromeOptions
 
 def resource_path(relative_path):
     """ Get the absolute path to the resource, works for development and for PyInstaller """
@@ -20,10 +16,8 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-
 app = QtWidgets.QApplication([])
 dlg = uic.loadUi(resource_path(os.path.join("assets", "Program.ui")))
-
 
 class Settings:
     isHeadlessEnabled = False
@@ -58,29 +52,12 @@ def output_to_app(platformName, sales):
 
 def exec_all():
     exec_revel()
-    # revelSales = run_revel()
-    # output_to_app("revel", revelSales)
-
     exec_doordash()
-    # doordashSales = run_doordash()
-    # output_to_app("doordash", doordashSales)
-    
     exec_uber()
-    # uberSales = run_uber()
-    # output_to_app("uber", uberSales)
-
     exec_grubhub()
-    # grubhubSales = run_grubhub()
-    # output_to_app("grubhub", grubhubSales)
 
-    # dlg.OutputConsole.clear()
-
-    # dlg.OutputConsole.addItem("Opening spreadsheet...")
-    # TODO: open browser to spreadsheet...
-    
 # exec_<platformName>() wrapper functions allow us to catch return value (threads dont handle return)
 def exec_revel():
-    # dlg.OutputConsole.addItem("Scraping Revel...")
     revelSales = run_revel()
     dlg.OutputConsole.clear()
     if revelSales == 1:
@@ -127,15 +104,12 @@ def webscrap_all_thread():
     dlg.OutputConsole.addItem("Scraping now...")
     webscrapThread = Thread(target=exec_all)
     webscrapThread.start()
-    # webscrapThread.join()
 
 def webscrap_revel_thread():
     dlg.OutputConsole.clear()
     dlg.OutputConsole.addItem("Scraping Revel...")
-    # webscrapThread = Thread(target=run_revel)
     webscrapThread = Thread(target=exec_revel)
     webscrapThread.start()
-    # webscrapThread.join()
 
 def webscrap_doordash_thread():
     dlg.OutputConsole.clear()
@@ -158,12 +132,9 @@ def webscrap_grubhub_thread():
 def open_github():
     dlg.statusbar.showMessage("Opening github repo to project...", 5000)
     options = ChromeOptions()
-    # options.add_argument("--disable-gpu")
-    # options.add_argument("--disable-extensions")
     options.add_experimental_option("detach", True)
     driver = webdriver.Chrome(options=options)
     driver.get("https://github.com/reedx8/Sales-Web-Scrap")
-    # driver.quit()
 
 def updateHeadlessBtn():
     settings.isHeadlessEnabled = dlg.HeadlessRadioBtn.isChecked()
@@ -175,10 +146,6 @@ dlg.UberButton.clicked.connect(webscrap_uber_thread)
 dlg.GrubhubButton.clicked.connect(webscrap_grubhub_thread)
 dlg.GithubButton.clicked.connect(open_github)
 dlg.HeadlessRadioBtn.clicked.connect(updateHeadlessBtn)
-
-
-
-
 
 dlg.show()
 app.exec()
