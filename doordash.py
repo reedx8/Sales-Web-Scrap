@@ -279,7 +279,3 @@ def run_doordash():
     # Step 6 -- Quit driver and exit program. Done:
     driver.quit()
     return all_sales
-
-
-
-
